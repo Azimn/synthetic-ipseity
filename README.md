@@ -2,13 +2,19 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.3 standalone durability candidate. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.4 standalone reference renderer candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## First-person-only renderer port (v0.4)
+
+The `SubjectOnlyRendererPort` fetches committed subject experience from the durable outbox and calls a supplied model renderer with **only** the admitted first-person string. Raw world state, source records, audit and host checkpoint never enter this reference callback. A failed renderer call does not acknowledge delivery; rendering is not an automatic memory write. This is an opt-in, unit-tested reference path, not a full security guarantee for arbitrary model API clients.
+
+See [renderer contract](docs/RENDERER_PORT_V0_4.md) and `tests/test_renderer_port.py`.
 
 ## Durable standalone host (v0.3)
 
