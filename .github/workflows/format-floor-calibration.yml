@@ -1,13 +1,8 @@
 name: format-floor-calibration-real-cpu
 
-# This is a *separate* prospectively registered instrument experiment.
-# No paid APIs. Runs only for PRs that change instrument code or manual dispatch.
+# Completed the initial real-model PR run on 2026-10-10.
+# Manual-only thereafter; never rerun CPU inference for documentation edits.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/format-floor-calibration.yml"
-      - "tools/format_floor_calibration.py"
-      - "src/synthetic_ipseity/format_probe.py"
   workflow_dispatch:
 
 permissions:
