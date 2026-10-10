@@ -48,3 +48,7 @@ python tools/cpu_model_smoke.py --outdir real-cpu-smoke
 This script connects only to the public model file repository for downloads and metadata unless the models are already cached. It does not call a paid completion provider. A model-download failure is an infrastructural result, not an experimental failure of Synthetic Ipseity.
 
 Evidence hygiene: no user-sensitive data, no made-up model outputs, no model advantage claim from fixtures, no cherry-picked case exclusion, and no silent change of selected C/D comparison after results have been seen.
+
+## Observed first run
+
+The actual 2026-10-10 workflow completed successfully and archived full raw model outputs. All eight final responses were schema-invalid: four from the 135M model were non-JSON and four from the 360M model were JSON-syntactic but structurally incorrect. This is an output-schema floor, not a meaningful D-versus-C contrast. The [permanent result record](../results/CPU_REAL_SMOKE_2026_10_10.md) pins source and model checksums and interprets the failure without retrospectively changing the preregistered scorer.
