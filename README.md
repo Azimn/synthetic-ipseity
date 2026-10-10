@@ -16,6 +16,8 @@ A bounded eight-trial C/D experiment using real instruction-tuned SmolLM2 135M a
 
 See [CPU smoke protocol and limitations](docs/CPU_MODEL_SMOKE_V0_9_1.md) and the [real inference workflow](.github/workflows/cpu-model-smoke.yml). It is independent of the normal CI simulation fixtures.
 
+**Actual first run (2026-10-10):** all eight final model responses failed the strict six-field schema, producing a zero-score floor for C and D. This does **not** establish behavioral equivalence or effectiveness. The [immutable-result provenance and negative report](results/CPU_REAL_SMOKE_2026_10_10.md) and [GitHub Actions run](https://github.com/Azimn/synthetic-ipseity/actions/runs/38094091849) record exactly what happened.
+
 ## First comparative behavioral pilot (v0.9)
 
 An offline, randomized four-arm A/B/C/D benchmark now supplies a **testable way to look for behavioral advantages** over first-person grammar alone. Condition D is recorded from the actual v0.8 organ and its durable outbox, while the other arms receive meaning-matched accessible evidence in different representations. Same-model and swapped-model continuations have equal two-call handoff designs. A separate deliberately unmatched engineering leak block is never combined with cognitive outcome scores.
