@@ -2,13 +2,19 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.4 standalone reference renderer candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.5 epistemic source-monitor research candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Epistemic source monitoring (v0.5)
+
+The independent `EpistemicSourceMonitor` distinguishes direct observation, heard and read accounts, verified versus unverified lived recollections, reconstruction, inference, dreams, imagination and uncertain recognition before any information can reach first-person awareness. Contradictory testimony from separately attested sources may yield an explicitly unresolved conflict, not an unearned truth verdict. The resulting `Observation` values use the existing subject-access and durable host interfaces. Hidden source identifiers and numeric recognition scores remain engineering-only data.
+
+See [source monitoring contract](docs/EPISTEMIC_SOURCE_MONITOR_V0_5.md), `tests/test_epistemics.py`, and `python tools/epistemic_diagnostic.py`. No character-specific cognitive architecture is imported, and a host still owns legitimate source attribution and attestation.
 
 ## First-person-only renderer port (v0.4)
 
@@ -109,6 +115,7 @@ python -m unittest discover -s tests -v
 python tools/diagnose.py
 python tools/organ_diagnostic.py
 python tools/durable_diagnostic.py
+python tools/epistemic_diagnostic.py
 ```
 
 ## Minimal example

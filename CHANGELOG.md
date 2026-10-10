@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0 epistemic source-monitor candidate, 2026-10-10
+
+Added character-agnostic epistemic source monitor with host-attested evidence classification, typed source-to-observation adaptation, downgrade of unverified claimed lived memories, bounded qualitative recognition confidence, and explicit structured contradictions without unearned verdicts. Added adversarial source-monitor tests, durable restart integration, end-to-end diagnostic and evidence contract. This is a narrow structural source-monitoring mechanism, not semantic truth evaluation or proof of improved persona continuity.
+
+
 ## 0.4.0 renderer ingress candidate, 2026-10-10
 
 Added first-person-only reference renderer port over the committed SQLite outbox, with isolated fake-model tests for raw-state exclusion, hostile external content, memory provenance, retries, restart recovery, and non-automatic memory writes. This covers the reference renderer handoff, not a universal guarantee that downstream hosts cannot bypass it.

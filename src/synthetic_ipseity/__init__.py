@@ -32,8 +32,18 @@ from .durable_host import (
 )
 
 from .renderer_port import RenderDelivery, SubjectOnlyRendererPort
+from .epistemics import (
+    EpistemicBatch, EpistemicClaim, EpistemicReceipt,
+    EpistemicSourceMonitor, EvidenceKind, Stance,
+)
 
 __all__ = [
+    "EpistemicBatch",
+    "EpistemicClaim",
+    "EpistemicReceipt",
+    "EpistemicSourceMonitor",
+    "EvidenceKind",
+    "Stance",
     "RenderDelivery",
     "SubjectOnlyRendererPort",
     "CommitReceipt",
