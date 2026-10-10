@@ -43,6 +43,9 @@ class Kind(str, Enum):
     EVIDENCE_RETRACTION = "evidence_retraction"
     EVIDENCE_RESOLUTION = "evidence_resolution"
     EVIDENCE_REVISION = "evidence_revision"
+    PALINODE_SHIFT = "palinode_shift"
+    PALINODE_DOUBT = "palinode_doubt"
+    PALINODE_RECALL = "palinode_recall"
 
 
 class MemoryClass(str, Enum):
@@ -63,6 +66,7 @@ _TEXTUAL = frozenset({
     Kind.RECOGNITION_LIKELY, Kind.RECOGNITION_STRONG,
     Kind.EVIDENCE_CONFLICT, Kind.EVIDENCE_RETRACTION,
     Kind.EVIDENCE_RESOLUTION, Kind.EVIDENCE_REVISION,
+    Kind.PALINODE_SHIFT, Kind.PALINODE_DOUBT, Kind.PALINODE_RECALL,
 })
 _ISSUER = object()
 
@@ -278,6 +282,15 @@ def _experience(signal: SourceSignal) -> str:
             f"I have encountered conflicting indications about "
             f"{_quoted(str(signal.value))}. I cannot yet tell which is right."
         )
+    if signal.kind is Kind.PALINODE_SHIFT:
+        return (f"I notice I have changed my mind about {_quoted(str(signal.value))}. "
+                "My new view may still be mistaken.")
+    if signal.kind is Kind.PALINODE_DOUBT:
+        return (f"I realize I am no longer certain about {_quoted(str(signal.value))}. "
+                "I had thought otherwise before.")
+    if signal.kind is Kind.PALINODE_RECALL:
+        return (f"I can recall having noticed my change of mind about "
+                f"{_quoted(str(signal.value))}. That memory does not settle the facts.")
     if signal.kind is Kind.RECOLLECTION:
         phrase = _quoted(str(signal.value))
         if signal.memory_class is MemoryClass.LIVED:
