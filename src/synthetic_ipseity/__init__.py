@@ -24,7 +24,18 @@ from .organ import (
     SCHEMA_VERSION,
 )
 
+from .durable_host import (
+    CommitReceipt,
+    DeliveryLease,
+    DurableIpseityHost,
+    HOST_SCHEMA_VERSION,
+)
+
 __all__ = [
+    "CommitReceipt",
+    "DeliveryLease",
+    "DurableIpseityHost",
+    "HOST_SCHEMA_VERSION",
     "AccessPolicy",
     "Channel",
     "Observation",
