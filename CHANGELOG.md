@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.1 actual CPU inference smoke, 2026-10-10
+
+Added a bounded real-model microstudy using publicly downloadable SmolLM2 135M/360M instruction models, C/D same-model and model-swapped paired conditions over two predetermined v0.9 cases, artifact archiving, model SHA and token/latency metadata, and free public-repository hosted CPU workflow. It is a transport/inference smoke, not a powered test of behavioral benefit or a substitute for the full 144-trial pilot.
+
 ## 0.9.0 comparative pilot infrastructure, 2026-10-10
 
 Added an information-matched A/B/C/D behavioral comparison harness with 12 paired synthetic case stems, real organ-generated Palinode D transcripts, balanced conflict/corroboration situations, same-model versus renderer-swap two-call handoffs, separately interpreted hidden-state exposure control, immutable randomized manifest hashes, local Ollama optional inference runner, strict six-field JSON evaluator, case-clustered paired bootstrap, fail-closed missing-result handling and synthetic sensitivity tests. No model-driven results or positive effects are claimed by this release.
