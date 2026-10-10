@@ -2,13 +2,36 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.2 standalone integration candidate, deterministic and restartable. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.3 standalone durability candidate. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Durable standalone host (v0.3)
+
+The `DurableIpseityHost` reference integration atomically commits the organ's event cursor and subject-only output in SQLite. It can recover after a crash, reject replayed events, and retry unacknowledged first-person output. It does not guarantee exactly-once renderer effects. Its independent default-denied perception boundary and original `Ipseity` APIs remain intact.
+
+```python
+from synthetic_ipseity import (
+    DurableIpseityHost, Observation, SourceSignal, Channel, Kind,
+)
+
+with DurableIpseityHost("character.db", subject_id="character-a", epoch_id="life-a") as host:
+    reading = Observation(1, 1, "life-a", Channel.BODY,
+        SourceSignal("character-a", Kind.COLD, 0.9, acquired=True),
+        attested=True)  # the host must actually establish this access
+    host.process(1, [reading])
+    lease = host.claim_next(now_ms=1000)
+    if lease is not None:
+        subject_text = host.read_subject_text(lease)
+        print(subject_text)  # I feel deeply chilled.
+        host.ack_delivery(lease)
+```
+
+See [durable host contract](docs/DURABLE_HOST_V0_3.md) for crash recovery, FIFO leases, host authority, transaction limits, and the exactly-once limitation. Use `python tools/durable_diagnostic.py` for an offline crash/restart demonstration.
 
 ## Complete organ API (v0.2)
 
@@ -79,6 +102,7 @@ python -m pip install -e .
 python -m unittest discover -s tests -v
 python tools/diagnose.py
 python tools/organ_diagnostic.py
+python tools/durable_diagnostic.py
 ```
 
 ## Minimal example
