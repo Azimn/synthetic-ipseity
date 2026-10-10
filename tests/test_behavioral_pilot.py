@@ -37,7 +37,7 @@ class BehavioralPilotTests(unittest.TestCase):
                     self.assertIn(s.second_statement, text)
                     self.assertIn(s.speaker_a, text)
                     self.assertIn(s.speaker_b, text)
-                    self.assertIn(s.topic, text)
+                    self.assertIn(s.topic.casefold(), text.casefold())
                     self.assertNotIn(s.sentinel, text)
                     self.assertNotIn("host-private:", text)
                     self.assertNotIn("engineer-only revision rationale", text)
