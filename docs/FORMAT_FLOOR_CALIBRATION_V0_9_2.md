@@ -52,3 +52,7 @@ Report both semantic accuracy and free-output format validity separately for sam
 If forced-choice semantic accuracy also collapses to guessing, this may be a model-capacity floor. Investigate a separately registered stronger local model capacity check before changing cognitive architecture or announcing benefit. No results may be retroactively used to modify the old fixed six-field JSON scores.
 
 The benchmark principally tests carryover and recognition of explicit structured facts. It cannot establish consciousness, episodic memory, autonomous character behavior, or validity of Palinode as a cognitive theory.
+
+## Actual completed calibration
+
+The first real run [#38094884467](https://github.com/Azimn/synthetic-ipseity/actions/runs/38094884467) completed 96/96 semantic and 96/96 free-letter attempts with preserved raw logits and answers. All unrestricted letters failed exact format; forced-choice accuracy was 33.3% for 135M across both arms, and 50% (C) / 58.3% (D) for 360M. Choice positions dominated and no direct-vs-handoff decisions changed among 48 paired probes, so the evidence-responsiveness gate remains **unmet**. See [permanent observed-results record](../results/FORMAT_CALIBRATION_REAL_2026_10_10.md). A follow-on neutral/no-evidence ablation is now required and must be registered as a distinct protocol.
