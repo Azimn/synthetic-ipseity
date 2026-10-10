@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.2 format-floor instrument calibration, 2026-10-10
+
+Separately registered a six-question, C/D paired forced-choice classifier with immutable per-trial options and measured logits; independent four-token free-letter format compliance; real direct-record and model-handoff controls; raw-score/latency/model metadata; strict complete-batch validation and free CPU GitHub Actions workflow. Historical v0.9 JSON scores remain unchanged, and this is a calibration rather than a cognitive-efficacy study.
+
+
 ## 0.9.1 actual CPU inference smoke, 2026-10-10
 
 Added a bounded real-model microstudy using publicly downloadable SmolLM2 135M/360M instruction models, C/D same-model and model-swapped paired conditions over two predetermined v0.9 cases, artifact archiving, model SHA and token/latency metadata, and free public-repository hosted CPU workflow. It is a transport/inference smoke, not a powered test of behavioral benefit or a substitute for the full 144-trial pilot.
