@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.3 source-evidence ablation instrument, 2026-10-10
+
+Registered and implemented real-model original/reversed/neutral source-content tests with identical candidate positions, explicit correct-polarity-reversal gate, raw per-letter model logits, no-truth-assigned neutral negative control, model-free mock-oracle and position-only controls, bounded free CPU inference, and artifact retention. Does not alter original v0.9 or v0.9.2 scores or introduce another cognitive mechanism.
+
+
 ## 0.9.2 format-floor instrument calibration, 2026-10-10
 
 Separately registered a six-question, C/D paired forced-choice classifier with immutable per-trial options and measured logits; independent four-token free-letter format compliance; real direct-record and model-handoff controls; raw-score/latency/model metadata; strict complete-batch validation and free CPU GitHub Actions workflow. The actual calibration yielded 96/96 exact free-letter format failures, and forced-choice predictions exhibited strong label-position bias with zero changes between direct and handoff inputs. The reproducible raw data and hashes are recorded in results/FORMAT_CALIBRATION_REAL_2026_10_10.md. Historical v0.9 JSON scores remain unchanged; no cognitive-efficacy result is claimed.
