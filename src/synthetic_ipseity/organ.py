@@ -155,6 +155,19 @@ class OrganOutput:
 
 
 @dataclass(frozen=True)
+class PendingStep:
+    """Prepare output and next cursor without mutating the live organ.
+
+    A host must durably record next_checkpoint and source-stream progress
+    before calling commit(). Output must not be rendered before that commit.
+    """
+
+    output: OrganOutput
+    base_digest: str
+    next_checkpoint: "OrganCheckpoint"
+
+
+@dataclass(frozen=True)
 class OrganCheckpoint:
     """Serializable, tamper-evident (not authenticated) cursor checkpoint.
 
@@ -267,6 +280,40 @@ class SyntheticIpseityOrgan:
         if batch:
             self._last_sequence = batch[-1].sequence
         return output
+
+    def preview(
+        self, tick: int, observations: Iterable[Observation],
+    ) -> PendingStep:
+        """Evaluate on a disposable clone; leave the live cursor unchanged."""
+        base = self.checkpoint()
+        clone = type(self).restore(base.to_dict())
+        output = clone.step(tick, observations)
+        return PendingStep(
+            output=output,
+            base_digest=base.digest,
+            next_checkpoint=clone.checkpoint(),
+        )
+
+    def commit(self, pending: PendingStep) -> OrganOutput:
+        """Apply a previously prepared transaction using an optimistic lease.
+
+        A stale proposal is rejected. The host is responsible for persisting
+        the proposed checkpoint and stream cursor as one durable transaction.
+        """
+        if type(pending) is not PendingStep:
+            raise TypeError("pending must be PendingStep")
+        if pending.base_digest != self.checkpoint().digest:
+            raise ValueError("stale proposal or wrong base organ")
+        updated = type(self).restore(pending.next_checkpoint.to_dict())
+        if (updated.subject_id != self.subject_id
+                or updated.epoch_id != self.epoch_id
+                or updated.policy != self.policy
+                or updated.last_tick <= self.last_tick
+                or updated.last_sequence < self.last_sequence):
+            raise ValueError("proposal violates subject or cursor continuity")
+        self._last_tick = updated.last_tick
+        self._last_sequence = updated.last_sequence
+        return pending.output
 
     def checkpoint(self) -> OrganCheckpoint:
         body: dict[str, object] = {
