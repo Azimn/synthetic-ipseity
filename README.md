@@ -34,7 +34,7 @@ authoritative world / body / memory / cognition / tool state
                                 action/expression
 ```
 
-The subject-facing `SubjectFrame` contains only natural-language experience. The engineer-facing `AuditEnvelope` separately holds diagnostic source values and decisions. **Never serialize the audit envelope into a renderer prompt.** In v0.1, the host's source attestations are trusted inputs. They are not cryptographically verified, and the library does not police arbitrary external renderer calls.
+The subject-facing `SubjectFrame` contains only natural-language experience. The engineer-facing `AuditEnvelope` separately holds diagnostic source values and decisions. **Never serialize the audit envelope into a renderer prompt.** In v0.1, access defaults to denied until a trusted host explicitly sets `acquired=True`. Host attestations are trusted inputs. They are not cryptographically verified, and the library does not police arbitrary external renderer calls.
 
 ## What this repository owns
 
@@ -59,8 +59,8 @@ from synthetic_ipseity import Ipseity, Kind, SourceSignal, render_frame
 
 organ = Ipseity(capacity=3)
 result = organ.process("subject-a", [
-    SourceSignal("subject-a", Kind.COLD, 0.8, source_ref="body:1"),
-    SourceSignal("subject-a", Kind.INSTRUMENT, "61 degrees", source_ref="thermometer:1"),
+    SourceSignal("subject-a", Kind.COLD, 0.8, source_ref="body:1", acquired=True),
+    SourceSignal("subject-a", Kind.INSTRUMENT, "61 degrees", source_ref="thermometer:1", acquired=True),
 ])
 print(render_frame(result.frame))
 # I feel deeply chilled.

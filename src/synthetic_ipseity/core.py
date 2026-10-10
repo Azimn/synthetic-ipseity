@@ -48,8 +48,9 @@ def _unit(value: object, label: str) -> float:
 class SourceSignal:
     """Host-supplied signal. Metadata is never placed inside SubjectFrame.
 
-    acquired means this individual was eligible to encounter this specific
-    signal. The library relies on the host to attest that claim truthfully.
+    acquired must be explicitly set True by a trusted host adapter when
+    this subject may encounter this specific signal. The default denies access.
+    The library relies on the host to attest that claim truthfully.
     salience is a host-supplied priority, not subject introspection.
     """
 
@@ -57,7 +58,7 @@ class SourceSignal:
     kind: Kind
     value: float | str
     source_ref: str = ""
-    acquired: bool = True
+    acquired: bool = False
     salience: float = 0.8
     memory_class: MemoryClass = MemoryClass.UNCERTAIN
 

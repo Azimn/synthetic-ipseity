@@ -7,12 +7,12 @@ def main() -> None:
     organ = Ipseity(capacity=3)
     inputs = [
         SourceSignal("sample-subject", Kind.COLD, 0.88,
-                     source_ref="hidden_body_reading"),
+                     source_ref="hidden_body_reading", acquired=True),
         SourceSignal("sample-subject", Kind.INSTRUMENT, "61 degrees",
-                     source_ref="seen_instrument"),
+                     source_ref="seen_instrument", acquired=True),
         SourceSignal("sample-subject", Kind.RECOLLECTION, "a glass beaker on the shelf",
                      source_ref="reconstruction_42",
-                     memory_class=MemoryClass.RECONSTRUCTED),
+                     memory_class=MemoryClass.RECONSTRUCTED, acquired=True),
         SourceSignal("sample-subject", Kind.REMINDER, "check the shelf",
                      source_ref="hidden_scheduler", acquired=False),
     ]

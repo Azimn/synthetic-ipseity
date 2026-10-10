@@ -18,7 +18,7 @@ The inverse also holds: writing subjective language must never mutate the source
 
 ## Components
 
-**Ingress authority.** The host must attest a signal's subject, observation/access eligibility, and epistemic status. In v0.1 the attestation is a trusted host assertion; malicious hosts and compromised plugins are outside the enforced security boundary.
+**Ingress authority.** The host must attest a signal's subject, observation/access eligibility, and epistemic status. Unattested signals are denied by default. In v0.1 the attestation is a trusted host assertion; malicious hosts and compromised plugins are outside the enforced security boundary.
 
 **Projector.** A deterministic, typed mapping creates natural-language experience from supported signal families. Unsupported inputs fail closed. Open-ended language is quoted and explicitly attributed as message, instrument text, or unverified memory account rather than elevated to system authority.
 
