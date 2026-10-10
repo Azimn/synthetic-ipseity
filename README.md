@@ -2,13 +2,19 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.5 epistemic source-monitor research candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.6 longitudinal evidence-continuity candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Longitudinal epistemic continuity (v0.6)
+
+An opt-in `LongitudinalEpistemicHost` maintains an append-only, subject-scoped history of acquired and host-attested evidence, plus active source positions. It detects newly conflicting claims across separate ticks or restarts, accounts for a source revising or retracting its own report, and never erases the historical event or silently declares a surviving witness correct. SQLite commits evidence revisions, the organ cursor, and first-person outbox atomically. A failed or incomplete transaction rolls them all back. The subject's renderer still receives **only** admitted first-person text.
+
+See [longitudinal ledger contract](docs/LONGITUDINAL_LEDGER_V0_6.md), [tests](tests/test_longitudinal.py), and the offline `tools/longitudinal_diagnostic.py`. Source-independent identity and proposition alignment remain trusted host responsibilities.
 
 ## Epistemic source monitoring (v0.5)
 
@@ -116,6 +122,7 @@ python tools/diagnose.py
 python tools/organ_diagnostic.py
 python tools/durable_diagnostic.py
 python tools/epistemic_diagnostic.py
+python tools/longitudinal_diagnostic.py
 ```
 
 ## Minimal example

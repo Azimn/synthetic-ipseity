@@ -40,6 +40,9 @@ class Kind(str, Enum):
     RECOGNITION_LIKELY = "recognition_likely"
     RECOGNITION_STRONG = "recognition_strong"
     EVIDENCE_CONFLICT = "evidence_conflict"
+    EVIDENCE_RETRACTION = "evidence_retraction"
+    EVIDENCE_RESOLUTION = "evidence_resolution"
+    EVIDENCE_REVISION = "evidence_revision"
 
 
 class MemoryClass(str, Enum):
@@ -58,7 +61,8 @@ _TEXTUAL = frozenset({
     Kind.DREAM, Kind.SELF_SPEECH,
     Kind.RECOGNITION_VAGUE, Kind.RECOGNITION_POSSIBLE,
     Kind.RECOGNITION_LIKELY, Kind.RECOGNITION_STRONG,
-    Kind.EVIDENCE_CONFLICT,
+    Kind.EVIDENCE_CONFLICT, Kind.EVIDENCE_RETRACTION,
+    Kind.EVIDENCE_RESOLUTION, Kind.EVIDENCE_REVISION,
 })
 _ISSUER = object()
 
@@ -253,6 +257,22 @@ def _experience(signal: SourceSignal) -> str:
         return f"I think that is {_quoted(str(signal.value))}."
     if signal.kind is Kind.RECOGNITION_STRONG:
         return f"I feel fairly sure that is {_quoted(str(signal.value))}."
+    if signal.kind is Kind.EVIDENCE_RETRACTION:
+        return (
+            f"I have learned that an earlier account of "
+            f"{_quoted(str(signal.value))} was withdrawn. "
+            "That account no longer supports my judgment."
+        )
+    if signal.kind is Kind.EVIDENCE_RESOLUTION:
+        return (
+            f"The active accounts I have about {_quoted(str(signal.value))} "
+            "no longer conflict. That alone does not prove what happened."
+        )
+    if signal.kind is Kind.EVIDENCE_REVISION:
+        return (
+            f"I have encountered a changed account of "
+            f"{_quoted(str(signal.value))}. I should reconsider it."
+        )
     if signal.kind is Kind.EVIDENCE_CONFLICT:
         return (
             f"I have encountered conflicting indications about "

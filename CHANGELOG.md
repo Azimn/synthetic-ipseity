@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 longitudinal epistemic ledger candidate, 2026-10-10
+
+Introduced a character-agnostic append-only evidence history, materialized active source stances and topic identity, verified across-tick contradiction transitions, explicit correction and retraction observations, transactional cursor/ledger/outbox persistence, restart/failure injection, and independent tests. Claims are never promoted into objective truth by majority. Raw provenance remains engineer-only, and v0.1-v0.5 host APIs remain compatible. Host attestation, independent witness identity, semantic claim alignment, and real application bypass prevention remain unproven beyond the reference boundary.
+
+
 ## 0.5.0 epistemic source-monitor candidate, 2026-10-10
 
 Added character-agnostic epistemic source monitor with host-attested evidence classification, typed source-to-observation adaptation, downgrade of unverified claimed lived memories, bounded qualitative recognition confidence, and explicit structured contradictions without unearned verdicts. Added adversarial source-monitor tests, durable restart integration, end-to-end diagnostic and evidence contract. This is a narrow structural source-monitoring mechanism, not semantic truth evaluation or proof of improved persona continuity.

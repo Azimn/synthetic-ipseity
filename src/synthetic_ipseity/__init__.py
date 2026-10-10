@@ -37,7 +37,18 @@ from .epistemics import (
     EpistemicSourceMonitor, EvidenceKind, Stance,
 )
 
+from .longitudinal import (
+    ChangeKind, EvidenceChange, LedgerCommit, LedgerStatus,
+    LongitudinalEpistemicHost, LEDGER_SCHEMA_VERSION,
+)
+
 __all__ = [
+    "ChangeKind",
+    "EvidenceChange",
+    "LedgerCommit",
+    "LedgerStatus",
+    "LongitudinalEpistemicHost",
+    "LEDGER_SCHEMA_VERSION",
     "EpistemicBatch",
     "EpistemicClaim",
     "EpistemicReceipt",
