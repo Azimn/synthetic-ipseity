@@ -81,7 +81,7 @@ class OrganTests(unittest.TestCase):
             incoming(2, kind=Kind.FATIGUE, value=0.8, salience=0.9),
         ])
         self.assertEqual(len(result.frame.lines), 1)
-        self.assertIn("tiredness", render_frame(result.frame))
+        self.assertIn("exhausted", render_frame(result.frame))
         self.assertNotIn("0.9", render_frame(result.frame))
         self.assertEqual(
             [r.decision for r in result.receipts], ["not_admitted", "admitted"]
