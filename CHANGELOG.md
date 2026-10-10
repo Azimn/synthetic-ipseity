@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 renderer ingress candidate, 2026-10-10
+
+Added first-person-only reference renderer port over the committed SQLite outbox, with isolated fake-model tests for raw-state exclusion, hostile external content, memory provenance, retries, restart recovery, and non-automatic memory writes. This covers the reference renderer handoff, not a universal guarantee that downstream hosts cannot bypass it.
+
 ## 0.3.0 durability candidate, 2026-10-10
 
 Added character-independent SQLite durable host with atomic checkpoint/outbox commit, FIFO subject-only delivery leases, restart and uncertainty recovery, strict subject/epoch partitioning, duplicate source cursor rejection, corrupt checkpoint/outbox rejection, simulated crash injection, standalone diagnostic, crash matrix and adversarial tests. Not an exactly-once delivery guarantee; host-level renderer isolation and scientific continuity evidence remain pending.
