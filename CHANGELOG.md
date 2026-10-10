@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0 comparative pilot infrastructure, 2026-10-10
+
+Added an information-matched A/B/C/D behavioral comparison harness with 12 paired synthetic case stems, real organ-generated Palinode D transcripts, balanced conflict/corroboration situations, same-model versus renderer-swap two-call handoffs, separately interpreted hidden-state exposure control, immutable randomized manifest hashes, local Ollama optional inference runner, strict six-field JSON evaluator, case-clustered paired bootstrap, fail-closed missing-result handling and synthetic sensitivity tests. No model-driven results or positive effects are claimed by this release.
+
 ## 0.8.0 Palinode second-thought candidate, 2026-10-10
 
 Added a compact, opt-in reflective-access gate over existing v0.7 provisional belief changes. A character may become aware of a prior change of mind only through host-attested, acquired and admitted cognitive input. Later recall of that reconsideration requires a real acknowledged subject-only outbox delivery plus separately attested memory acquisition. Append-only receipt tickets, subject/epoch checks, pre-ACK rejection, crash rollback and restart cases are tested. No automatic conversion of hidden bookkeeping into lived memory; no new independent architecture or consciousness claims.

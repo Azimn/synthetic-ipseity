@@ -2,13 +2,19 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.8 opt-in Palinode second-thought candidate, retaining the v0.6 evidence ledger, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.9 empirical-pilot infrastructure candidate; the organ's behavioral advantage remains untested, retaining the v0.6 evidence ledger, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## First comparative behavioral pilot (v0.9)
+
+An offline, randomized four-arm A/B/C/D benchmark now supplies a **testable way to look for behavioral advantages** over first-person grammar alone. Condition D is recorded from the actual v0.8 organ and its durable outbox, while the other arms receive meaning-matched accessible evidence in different representations. Same-model and swapped-model continuations have equal two-call handoff designs. A separate deliberately unmatched engineering leak block is never combined with cognitive outcome scores.
+
+The runner supports real inference only through an optional free, local Ollama server. The included CI fixtures are explicitly simulated to validate scoring, NOT a reported continuity improvement. Read [the frozen experimental protocol](docs/BEHAVIORAL_PILOT_V0_9.md), execute `python tools/continuity_benchmark.py --help`, and inspect `tests/test_behavioral_pilot.py`. A real-model pilot with per-model null reporting has not yet been executed.
 
 ## Palinode, the second-thought gate (v0.8)
 
@@ -137,6 +143,7 @@ python tools/epistemic_diagnostic.py
 python tools/longitudinal_diagnostic.py
 python tools/belief_revision_diagnostic.py
 python tools/palinode_diagnostic.py
+python tools/continuity_benchmark.py --help
 ```
 
 ## Minimal example
