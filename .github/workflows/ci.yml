@@ -22,4 +22,5 @@ jobs:
       - run: python tools/durable_diagnostic.py
       - run: python tools/epistemic_diagnostic.py
       - run: python tools/longitudinal_diagnostic.py
+      - run: python tools/belief_revision_diagnostic.py
       - run: python -m compileall -q src tests tools
