@@ -2,13 +2,41 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.1 research scaffold and deterministic reference implementation. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.2 standalone integration candidate, deterministic and restartable. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Complete organ API (v0.2)
+
+The v0.2 `SyntheticIpseityOrgan` gives a single character and continuity epoch a typed host ingress, default-denied attestation, a monotonically sequenced observation log, limited access arbitration, immutable subject-facing text, separate engineer audit, checksummed restart cursor, and an optional non-mutating preview/commit workflow.
+
+```python
+from synthetic_ipseity import (
+    Channel, Kind, Observation, SourceSignal,
+    SyntheticIpseityOrgan, render_frame,
+)
+
+organ = SyntheticIpseityOrgan("subject-1", epoch_id="life-1")
+observation = Observation(
+    sequence=1, tick=1, epoch_id="life-1", channel=Channel.BODY,
+    signal=SourceSignal(
+        "subject-1", Kind.COLD, 0.9,
+        source_ref="private-body-state", acquired=True,
+    ),
+    attested=True,  # trusted host adapter only
+)
+pending = organ.preview(1, [observation])
+# Persist pending.next_checkpoint and the source cursor durably, together.
+output = organ.commit(pending)
+print(render_frame(output.frame))  # "I feel deeply chilled."
+# Never pass output.audit, output.receipts, or the checkpoint to a renderer.
+```
+
+See [Organ v0.2 integration contract](docs/ORGAN_V0_2_INTEGRATION.md) for the trust model, typed source channels, restart, transactional responsibilities, security limitations, and downstream adoption gates. The v0.1 `Ipseity.process` API remains available for existing consumers. `tools/organ_diagnostic.py` exercises the new end-to-end path without an LLM.
 
 ## Separation of authority
 
@@ -34,7 +62,7 @@ authoritative world / body / memory / cognition / tool state
                                 action/expression
 ```
 
-The subject-facing `SubjectFrame` contains only natural-language experience. The engineer-facing `AuditEnvelope` separately holds diagnostic source values and decisions. **Never serialize the audit envelope into a renderer prompt.** In v0.1, access defaults to denied until a trusted host explicitly sets `acquired=True`. Host attestations are trusted inputs. They are not cryptographically verified, and the library does not police arbitrary external renderer calls.
+The subject-facing `SubjectFrame` contains only natural-language experience. The engineer-facing `AuditEnvelope` separately holds diagnostic source values and decisions. **Never serialize the audit envelope into a renderer prompt.** In v0.2, the standalone organ also requires an independent host `attested=True` claim on the typed observation. Untrusted payloads must never set either flag. Host attestations are trusted inputs. They are not cryptographically verified, and the library does not police arbitrary external renderer calls.
 
 ## What this repository owns
 
@@ -50,6 +78,7 @@ Python 3.11+ with the standard library only:
 python -m pip install -e .
 python -m unittest discover -s tests -v
 python tools/diagnose.py
+python tools/organ_diagnostic.py
 ```
 
 ## Minimal example
@@ -72,7 +101,7 @@ See [research contract](docs/RESEARCH_CONTRACT.md), [experimental protocol](docs
 
 ## Evidence boundary
 
-The included tests establish **local software contract behavior** for this reference implementation. They do not establish subjective consciousness, human-likeness, improved character continuity, or a complete no-bypass guarantee in any host application. Those are separate experimental and integration claims requiring adversarial tests and longitudinal controls.
+The included tests establish **local software contract behavior** for this reference implementation, including the v0.2 event cursor and transactional preview/commit path. They do not establish subjective consciousness, human-likeness, improved character continuity, or a complete no-bypass guarantee in any host application. Those are separate experimental and integration claims requiring adversarial tests and longitudinal controls.
 
 ## Release policy
 

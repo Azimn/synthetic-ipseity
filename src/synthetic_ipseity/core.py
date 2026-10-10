@@ -22,6 +22,19 @@ class Kind(str, Enum):
     HEARD_TEXT = "heard_text"
     INSTRUMENT = "read_instrument"
     REMINDER = "reminder"
+    PAIN = "bodily_pain"
+    HUNGER = "bodily_hunger"
+    FEAR = "felt_fear"
+    SEEN_TEXT = "seen_text"
+    TOOL_TEXT = "tool_text"
+    WORLD_OBJECT = "world_object"
+    IMPULSE = "impulse"
+    INTENTION = "intention"
+    CONCERN = "concern"
+    INFERENCE = "inference"
+    IMAGINATION = "imagination"
+    DREAM = "dream"
+    SELF_SPEECH = "self_speech"
 
 
 class MemoryClass(str, Enum):
@@ -30,8 +43,15 @@ class MemoryClass(str, Enum):
     UNCERTAIN = "uncertain"
 
 
-_NUMERIC = frozenset({Kind.COLD, Kind.FATIGUE, Kind.TRUST})
-_TEXTUAL = frozenset({Kind.RECOLLECTION, Kind.HEARD_TEXT, Kind.INSTRUMENT, Kind.REMINDER})
+_NUMERIC = frozenset({
+    Kind.COLD, Kind.FATIGUE, Kind.TRUST, Kind.PAIN, Kind.HUNGER, Kind.FEAR,
+})
+_TEXTUAL = frozenset({
+    Kind.RECOLLECTION, Kind.HEARD_TEXT, Kind.INSTRUMENT, Kind.REMINDER,
+    Kind.SEEN_TEXT, Kind.TOOL_TEXT, Kind.WORLD_OBJECT, Kind.IMPULSE,
+    Kind.INTENTION, Kind.CONCERN, Kind.INFERENCE, Kind.IMAGINATION,
+    Kind.DREAM, Kind.SELF_SPEECH,
+})
 _ISSUER = object()
 
 
@@ -157,6 +177,33 @@ def _experience(signal: SourceSignal) -> str:
         if level < 0.80:
             return "I am struggling to concentrate through the tiredness."
         return "I am exhausted."
+    if signal.kind is Kind.PAIN:
+        level = float(signal.value)
+        if level < 0.15:
+            return "I barely notice any discomfort."
+        if level < 0.50:
+            return "I feel a little pain."
+        if level < 0.80:
+            return "The pain keeps drawing my attention back."
+        return "The pain is overwhelming my attention."
+    if signal.kind is Kind.HUNGER:
+        level = float(signal.value)
+        if level < 0.15:
+            return "I hardly notice any hunger."
+        if level < 0.50:
+            return "I am a little hungry."
+        if level < 0.80:
+            return "Hunger keeps tugging at my attention."
+        return "I am very hungry."
+    if signal.kind is Kind.FEAR:
+        level = float(signal.value)
+        if level < 0.15:
+            return "I barely notice any unease."
+        if level < 0.50:
+            return "I feel a little uneasy."
+        if level < 0.80:
+            return "I am frightened."
+        return "Fear is difficult to ignore."
     if signal.kind is Kind.TRUST:
         level = float(signal.value)
         if level < 0.30:
@@ -170,6 +217,26 @@ def _experience(signal: SourceSignal) -> str:
         return f"I can read the instrument: {_quoted(str(signal.value))}."
     if signal.kind is Kind.REMINDER:
         return f"A reminder draws my attention to: {_quoted(str(signal.value))}."
+    if signal.kind is Kind.SEEN_TEXT:
+        return f"I can see written words: {_quoted(str(signal.value))}."
+    if signal.kind is Kind.TOOL_TEXT:
+        return f"I encounter a tool report saying: {_quoted(str(signal.value))}."
+    if signal.kind is Kind.WORLD_OBJECT:
+        return f"I notice: {_quoted(str(signal.value))}."
+    if signal.kind is Kind.IMPULSE:
+        return f"I feel an urge to {_quoted(str(signal.value))}."
+    if signal.kind is Kind.INTENTION:
+        return f"I mean to {_quoted(str(signal.value))}."
+    if signal.kind is Kind.CONCERN:
+        return f"I keep thinking about {_quoted(str(signal.value))}."
+    if signal.kind is Kind.INFERENCE:
+        return f"I suspect {_quoted(str(signal.value))}, but I could be wrong."
+    if signal.kind is Kind.IMAGINATION:
+        return f"I imagine {_quoted(str(signal.value))}; this is not a memory."
+    if signal.kind is Kind.DREAM:
+        return f"I recall dreaming of {_quoted(str(signal.value))}, not necessarily living it."
+    if signal.kind is Kind.SELF_SPEECH:
+        return f"I hear myself say: {_quoted(str(signal.value))}."
     if signal.kind is Kind.RECOLLECTION:
         phrase = _quoted(str(signal.value))
         if signal.memory_class is MemoryClass.LIVED:

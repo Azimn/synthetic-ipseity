@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "synthetic-ipseity"
-version = "0.1.0"
-description = "Character-agnostic first-person subject-access interface research component"
+version = "0.2.0"
+description = "Character-agnostic first-person subject-access interface research and deterministic runtime organ"
 requires-python = ">=3.11"
 dependencies = []
 
