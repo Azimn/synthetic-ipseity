@@ -14,7 +14,7 @@ Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory 
 
 The first genuine small-model run exposed a measurement-floor failure: **8/8** final outputs failed the strict six-field JSON schema. The old scores and raw evidence remain untouched. v0.9.2 introduces a separately preregistered instrument that asks each of the six questions independently, scores **semantic selection using forced-choice model logits**, and reports **unrestricted one-letter output validity** separately. The calibration also compares an unchanged original context against a model-created handoff to distinguish format capacity from handoff loss.
 
-This is an **instrument calibration, not evidence of an improved artificial self**. Its fixed two-case real CPU protocol is in [FORMAT_FLOOR_CALIBRATION_V0_9_2.md](docs/FORMAT_FLOOR_CALIBRATION_V0_9_2.md) and the independent [real CPU workflow](.github/workflows/format-floor-calibration.yml). The old [v0.9.1 results](results/CPU_REAL_SMOKE_2026_10_10.md) remain unchanged.
+This is an **instrument calibration, not evidence of an improved artificial self**. The completed first real run measured 96 next-token classifications and 96 free-format answers: formatting remained invalid throughout, and a strong B/C answer-position preference demands a new no-evidence control. [Read the full negative calibration result](results/FORMAT_CALIBRATION_REAL_2026_10_10.md). Its fixed two-case real CPU protocol is in [FORMAT_FLOOR_CALIBRATION_V0_9_2.md](docs/FORMAT_FLOOR_CALIBRATION_V0_9_2.md) and the independent [real CPU workflow](.github/workflows/format-floor-calibration.yml). The old [v0.9.1 results](results/CPU_REAL_SMOKE_2026_10_10.md) remain unchanged.
 
 ## Actual free CPU model smoke (v0.9.1)
 
