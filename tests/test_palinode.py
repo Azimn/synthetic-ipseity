@@ -7,6 +7,7 @@ import unittest
 from synthetic_ipseity import (
     AccessPolicy, BeliefPosition, EpistemicClaim, EvidenceKind,
     ProvisionalBeliefRevision, Stance, SubjectOnlyRendererPort, render_frame,
+    DurableIpseityHost,
 )
 from synthetic_ipseity.palinode import (
     PalinodeHost, ReflectionMode, ReflectionRequest,
@@ -150,11 +151,15 @@ class PalinodeTests(unittest.TestCase):
         self.drain_prior()
         self.host.process_reflections(3, [request(self.revision_id)])
         seen = []
-        port = SubjectOnlyRendererPort(
-            self.host, lambda context: seen.append(context) or "I ought to check."
-        )
-        returned = port.deliver_next(now_ms=200)
-        self.assertEqual(returned.response, "I ought to check.")
+        with DurableIpseityHost(
+            self.path, subject_id="alice", epoch_id="life-1",
+            policy=AccessPolicy(capacity=5),
+        ) as renderer_host:
+            port = SubjectOnlyRendererPort(
+                renderer_host, lambda context: seen.append(context) or "I ought to check."
+            )
+            returned = port.deliver_next(now_ms=200)
+            self.assertEqual(returned.response, "I ought to check.")
         self.assertEqual(len(seen), 1)
         self.assertNotIn("revision_id", seen[0])
         self.assertNotIn("Henry", seen[0])
@@ -271,10 +276,14 @@ class PalinodeTests(unittest.TestCase):
         self.host.process_reflections(3, [request(self.revision_id)])
         def broken(_context):
             raise RuntimeError("renderer not available")
-        with self.assertRaisesRegex(RuntimeError, "renderer not available"):
-            SubjectOnlyRendererPort(self.host, broken).deliver_next(
-                now_ms=100, lease_ms=100
-            )
+        with DurableIpseityHost(
+            self.path, subject_id="alice", epoch_id="life-1",
+            policy=AccessPolicy(capacity=5),
+        ) as renderer_host:
+            with self.assertRaisesRegex(RuntimeError, "renderer not available"):
+                SubjectOnlyRendererPort(renderer_host, broken).deliver_next(
+                    now_ms=100, lease_ms=100
+                )
         with self.assertRaisesRegex(ValueError, "never delivered"):
             self.host.process_reflections(
                 4, [request(self.revision_id, ReflectionMode.RECALL)]
