@@ -2,7 +2,7 @@
 
 **Purpose:** test the experimental transport end to end using *real* language-model inference before attempting a resource-intensive 144-trial pilot. This is NOT a powered test of cognitive benefit and does not replace the v0.9 preregistration.
 
-The public repository's standard ubuntu-latest GitHub Actions runners are free under GitHub's public-repository billing policy. The workflow is only triggered when the CPU experiment's runner or workflow changes on a pull request, or by manual dispatch. There is **no** paid API, GPU runner, scheduled monitoring, or background autonomous billing. The model weights are fetched from the public Hugging Face repositories, and no user or Pretorius personal information is sent to the models.
+The public repository's standard ubuntu-latest GitHub Actions runners are free under GitHub's public-repository billing policy. The workflow is now manual-dispatch only after the first successful research run; ordinary pull requests do not redownload models. There is **no** paid API, GPU runner, scheduled monitoring, or background autonomous billing. The model weights are fetched from the public Hugging Face repositories, and no user or Pretorius personal information is sent to the models.
 
 ## Fixed setup (before results)
 
@@ -35,7 +35,7 @@ This exercise can establish only that independent model checkpoints receive the 
 
 ## Execution
 
-The workflow is at .github/workflows/cpu-model-smoke.yml. Changing the runner file or workflow in a pull request automatically executes one CPU test (up to 25 minutes); after merge, it may be triggered manually from GitHub Actions.
+The workflow is at .github/workflows/cpu-model-smoke.yml. After merge, run it intentionally from GitHub Actions using the workflow's Run workflow control (up to 25 minutes), rather than repeatedly launching real inference on documentation updates.
 
 If using a workstation with offline-cached weights and the required dependencies, run:
 
