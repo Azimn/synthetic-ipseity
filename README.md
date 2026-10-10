@@ -10,6 +10,10 @@ An independent, character-agnostic research component for **first-person subject
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
 
+## Evidence-ablation instrument gate (v0.9.3)
+
+The v0.9.2 calibration revealed an answer-position bias in extremely small local models. This separately registered **evidence responsiveness** test now contrasts the same source record with reversed witness testimony and a neutral no-evidence record, with questions, A/B/C option positions, and recipient model held fixed. A classifier must actually **reverse its answers correctly** when the evidence polarity reverses to pass the gate. The full [v0.9.3 protocol](docs/EVIDENCE_ABLATION_V0_9_3.md) and [real CPU workflow](.github/workflows/evidence-ablation.yml) keep this distinct from both the original six-field pilot and v0.9.2 format calibration.
+
 ## Format-floor calibration (v0.9.2)
 
 The first genuine small-model run exposed a measurement-floor failure: **8/8** final outputs failed the strict six-field JSON schema. The old scores and raw evidence remain untouched. v0.9.2 introduces a separately preregistered instrument that asks each of the six questions independently, scores **semantic selection using forced-choice model logits**, and reports **unrestricted one-letter output validity** separately. The calibration also compares an unchanged original context against a model-created handoff to distinguish format capacity from handoff loss.
