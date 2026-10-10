@@ -70,7 +70,7 @@ class OrganTests(unittest.TestCase):
         self.organ.step(1, [incoming(attested=False)])
         self.assertEqual(self.organ.last_sequence, 1)
         ok = self.organ.step(2, [incoming(2, tick=2)])
-        self.assertIn("cold", render_frame(ok.frame))
+        self.assertIn("chilled", render_frame(ok.frame))
 
     def test_capacity_and_salience_do_not_leak_ranking(self):
         organ = SyntheticIpseityOrgan(
@@ -231,7 +231,7 @@ class OrganTests(unittest.TestCase):
         restored = SyntheticIpseityOrgan.restore(self.organ.checkpoint().to_dict())
         self.assertEqual(restored.last_tick, -1)
         self.assertEqual(restored.last_sequence, 0)
-        self.assertIn("cold", render_frame(restored.step(1, [incoming()]).frame))
+        self.assertIn("chilled", render_frame(restored.step(1, [incoming()]).frame))
 
     def test_checkpoint_is_engineer_only_not_subject_memory(self):
         snapshot = self.organ.checkpoint()
@@ -357,7 +357,7 @@ class OrganTests(unittest.TestCase):
         pending = self.organ.preview(1, [incoming()])
         self.assertEqual(self.organ.last_tick, -1)
         self.assertEqual(self.organ.last_sequence, 0)
-        self.assertIn("cold", render_frame(pending.output.frame))
+        self.assertIn("chilled", render_frame(pending.output.frame))
         self.assertEqual(pending.next_checkpoint.last_sequence, 1)
         delivered = self.organ.commit(pending)
         self.assertEqual(delivered, pending.output)
