@@ -1,13 +1,8 @@
 name: small-model-real-inference-smoke
 
-# Only the research runner or its workflow triggers real downloads.
+# Explicitly opt-in; do not re-download models on every PR update.
 # Standard ubuntu-latest on this PUBLIC repo is non-billable GitHub Actions.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/cpu-model-smoke.yml"
-      - "tools/cpu_model_smoke.py"
-      - "src/synthetic_ipseity/behavioral_pilot.py"
   workflow_dispatch:
 
 permissions:
