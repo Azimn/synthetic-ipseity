@@ -47,6 +47,19 @@ _ALLOWED: Mapping[Kind, frozenset[Channel]] = {
     Kind.HEARD_TEXT: frozenset({Channel.COMMUNICATION, Channel.SELF_PERCEPTION}),
     Kind.INSTRUMENT: frozenset({Channel.INSTRUMENT}),
     Kind.REMINDER: frozenset({Channel.SCHEDULER}),
+    Kind.PAIN: frozenset({Channel.BODY}),
+    Kind.HUNGER: frozenset({Channel.BODY}),
+    Kind.FEAR: frozenset({Channel.BODY, Channel.COGNITION}),
+    Kind.SEEN_TEXT: frozenset({Channel.WORLD}),
+    Kind.TOOL_TEXT: frozenset({Channel.TOOL}),
+    Kind.WORLD_OBJECT: frozenset({Channel.WORLD}),
+    Kind.IMPULSE: frozenset({Channel.COGNITION}),
+    Kind.INTENTION: frozenset({Channel.COGNITION}),
+    Kind.CONCERN: frozenset({Channel.COGNITION}),
+    Kind.INFERENCE: frozenset({Channel.COGNITION}),
+    Kind.IMAGINATION: frozenset({Channel.COGNITION}),
+    Kind.DREAM: frozenset({Channel.MEMORY}),
+    Kind.SELF_SPEECH: frozenset({Channel.SELF_PERCEPTION}),
 }
 
 
