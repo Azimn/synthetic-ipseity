@@ -60,6 +60,11 @@ _ALLOWED: Mapping[Kind, frozenset[Channel]] = {
     Kind.IMAGINATION: frozenset({Channel.COGNITION}),
     Kind.DREAM: frozenset({Channel.MEMORY}),
     Kind.SELF_SPEECH: frozenset({Channel.SELF_PERCEPTION}),
+    Kind.RECOGNITION_VAGUE: frozenset({Channel.WORLD}),
+    Kind.RECOGNITION_POSSIBLE: frozenset({Channel.WORLD}),
+    Kind.RECOGNITION_LIKELY: frozenset({Channel.WORLD}),
+    Kind.RECOGNITION_STRONG: frozenset({Channel.WORLD}),
+    Kind.EVIDENCE_CONFLICT: frozenset({Channel.COGNITION}),
 }
 
 
