@@ -43,7 +43,17 @@ from .longitudinal import (
     LongitudinalEpistemicHost, LEDGER_SCHEMA_VERSION,
 )
 
+from .palinode import (
+    PALINODE_SCHEMA_VERSION, PalinodeHost, ReflectionMode,
+    ReflectionRequest, ReflectionStatus,
+)
+
 __all__ = [
+    "PALINODE_SCHEMA_VERSION",
+    "PalinodeHost",
+    "ReflectionMode",
+    "ReflectionRequest",
+    "ReflectionStatus",
     "BeliefPosition",
     "ProvisionalBeliefRevision",
     "ProvisionalBeliefRecord",

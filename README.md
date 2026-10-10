@@ -2,13 +2,19 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.7 provisional belief-revision candidate, retaining the v0.6 evidence ledger, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.8 opt-in Palinode second-thought candidate, retaining the v0.6 evidence ledger, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Palinode, the second-thought gate (v0.8)
+
+The opt-in `PalinodeHost` turns prior, committed working-position **changes** into host-attested opportunities for first-person reconsideration. A revised belief does not automatically generate a thought. An admitted notice must pass the organ's cognition gate and be acknowledged by the durable subject-only renderer outbox before a later, separately attested recollection can be admitted. Engineer-only source identifiers and revision reasons remain hidden. The first position is not a change of mind; pending or failed renderer calls cannot fabricate a later memory.
+
+This adds a small metacognitive organ component, not another belief ledger, renderer or cognitive architecture. See [Palinode's access and recall contract](docs/PALINODE_SECOND_THOUGHT_V0_8.md), `tests/test_palinode.py` and `tools/palinode_diagnostic.py`.
 
 ## Provisional belief revisions (v0.7)
 
@@ -130,6 +136,7 @@ python tools/durable_diagnostic.py
 python tools/epistemic_diagnostic.py
 python tools/longitudinal_diagnostic.py
 python tools/belief_revision_diagnostic.py
+python tools/palinode_diagnostic.py
 ```
 
 ## Minimal example

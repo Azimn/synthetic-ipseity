@@ -68,6 +68,9 @@ _ALLOWED: Mapping[Kind, frozenset[Channel]] = {
     Kind.EVIDENCE_RETRACTION: frozenset({Channel.COMMUNICATION}),
     Kind.EVIDENCE_RESOLUTION: frozenset({Channel.COGNITION}),
     Kind.EVIDENCE_REVISION: frozenset({Channel.COMMUNICATION, Channel.COGNITION}),
+    Kind.PALINODE_SHIFT: frozenset({Channel.COGNITION}),
+    Kind.PALINODE_DOUBT: frozenset({Channel.COGNITION}),
+    Kind.PALINODE_RECALL: frozenset({Channel.MEMORY}),
 }
 
 
