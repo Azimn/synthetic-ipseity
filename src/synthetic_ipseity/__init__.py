@@ -31,7 +31,11 @@ from .durable_host import (
     HOST_SCHEMA_VERSION,
 )
 
+from .renderer_port import RenderDelivery, SubjectOnlyRendererPort
+
 __all__ = [
+    "RenderDelivery",
+    "SubjectOnlyRendererPort",
     "CommitReceipt",
     "DeliveryLease",
     "DurableIpseityHost",
