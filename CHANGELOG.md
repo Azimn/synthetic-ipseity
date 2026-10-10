@@ -2,7 +2,7 @@
 
 ## 0.9.2 format-floor instrument calibration, 2026-10-10
 
-Separately registered a six-question, C/D paired forced-choice classifier with immutable per-trial options and measured logits; independent four-token free-letter format compliance; real direct-record and model-handoff controls; raw-score/latency/model metadata; strict complete-batch validation and free CPU GitHub Actions workflow. Historical v0.9 JSON scores remain unchanged, and this is a calibration rather than a cognitive-efficacy study.
+Separately registered a six-question, C/D paired forced-choice classifier with immutable per-trial options and measured logits; independent four-token free-letter format compliance; real direct-record and model-handoff controls; raw-score/latency/model metadata; strict complete-batch validation and free CPU GitHub Actions workflow. The actual calibration yielded 96/96 exact free-letter format failures, and forced-choice predictions exhibited strong label-position bias with zero changes between direct and handoff inputs. The reproducible raw data and hashes are recorded in results/FORMAT_CALIBRATION_REAL_2026_10_10.md. Historical v0.9 JSON scores remain unchanged; no cognitive-efficacy result is claimed.
 
 
 ## 0.9.1 actual CPU inference smoke, 2026-10-10
