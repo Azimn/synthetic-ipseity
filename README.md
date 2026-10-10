@@ -2,13 +2,21 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.5 epistemic source-monitor research candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.6 longitudinal epistemic-ledger candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Longitudinal epistemic ledger (v0.6)
+
+The `LongitudinalEpistemicHost` adds an append-only, character-independent evidence ledger to the existing SQLite organ. A report encountered today can conflict with evidence acquired after a restart. The character receives an uncertainty-aware first-person notice only if admitted by the existing awareness gate. The organ also records *provisional* belief revisions (affirm, deny, suspend) with cited source provenance, retaining earlier records rather than rewriting history.
+
+The event cursor, source ledger, provisional revision trail and subject-only outbox commit atomically. Only the outbox is eligible for rendering. This does not prove source truth or host-wide no-bypass and requires trusted attestation, claim keys and source identity.
+
+Read [longitudinal ledger contract](docs/LONGITUDINAL_EPISTEMIC_LEDGER_V0_6.md), run `python tools/longitudinal_diagnostic.py`, and inspect the negative controls in `tests/test_epistemic_ledger.py`.
 
 ## Epistemic source monitoring (v0.5)
 
@@ -116,6 +124,7 @@ python tools/diagnose.py
 python tools/organ_diagnostic.py
 python tools/durable_diagnostic.py
 python tools/epistemic_diagnostic.py
+python tools/longitudinal_diagnostic.py
 ```
 
 ## Minimal example
