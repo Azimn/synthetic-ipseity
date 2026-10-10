@@ -2,13 +2,19 @@
 
 An independent, character-agnostic research component for **first-person subject access** in artificial characters.
 
-**Status:** v0.6 longitudinal evidence-continuity candidate, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
+**Status:** v0.7 provisional belief-revision candidate, retaining the v0.6 evidence ledger, with v0.3 durable persistence. The deterministic organ and v0.1 API remain supported; behavioral efficacy is unvalidated. The v0.1 API remains compatible. The proposed behavioral-continuity benefit remains unvalidated. Not a consciousness model, not a full artificial organism, and not yet a validated behavioral-continuity improvement.
 
 ## The governing rule
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
+
+## Provisional belief revisions (v0.7)
+
+The original v0.6 `LongitudinalEpistemicHost` now supports an explicitly host-attested `belief_revisions` parameter on `process_evidence`. It records changes in the character's **working position** (affirm, deny, suspend) without mutating prior source testimony, events or world history. Each revision must cite active, acquired, attested evidence. The evidence ledger, revised position, subject cursor and subject-only outbox commit in the same SQLite transaction. No revision is automatically elevated into first-person thought or factual world truth.
+
+See [provisional-belief revision contract](docs/PROVISIONAL_BELIEFS_V0_7.md), [tests](tests/test_belief_revisions.py), and `python tools/belief_revision_diagnostic.py`. Database schema migration from v0.6 is additive but requires a backup before adopting v0.7.
 
 ## Longitudinal epistemic continuity (v0.6)
 
@@ -123,6 +129,7 @@ python tools/organ_diagnostic.py
 python tools/durable_diagnostic.py
 python tools/epistemic_diagnostic.py
 python tools/longitudinal_diagnostic.py
+python tools/belief_revision_diagnostic.py
 ```
 
 ## Minimal example

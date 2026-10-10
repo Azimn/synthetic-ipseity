@@ -38,11 +38,15 @@ from .epistemics import (
 )
 
 from .longitudinal import (
+    BeliefPosition, ProvisionalBeliefRevision, ProvisionalBeliefRecord,
     ChangeKind, EvidenceChange, LedgerCommit, LedgerStatus,
     LongitudinalEpistemicHost, LEDGER_SCHEMA_VERSION,
 )
 
 __all__ = [
+    "BeliefPosition",
+    "ProvisionalBeliefRevision",
+    "ProvisionalBeliefRecord",
     "ChangeKind",
     "EvidenceChange",
     "LedgerCommit",
