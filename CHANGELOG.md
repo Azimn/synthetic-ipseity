@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 provisional belief revisions, 2026-10-10
+
+Preserves the v0.6 source-correction and retraction ledger while adding an append-only host-attested provisional belief position trail, active-evidence validation, atomic transaction integration, restart tests and additive SQLite schema upgrade from ledger 1 to 2. The reference subject renderer remains isolated from engineering-only revisions. No parallel ledger is introduced and no behavioral improvement has been claimed.
+
 ## 0.6.0 longitudinal epistemic ledger candidate, 2026-10-10
 
 Introduced a character-agnostic append-only evidence history, materialized active source stances and topic identity, verified across-tick contradiction transitions, explicit correction and retraction observations, transactional cursor/ledger/outbox persistence, restart/failure injection, and independent tests. Claims are never promoted into objective truth by majority. Raw provenance remains engineer-only, and v0.1-v0.5 host APIs remain compatible. Host attestation, independent witness identity, semantic claim alignment, and real application bypass prevention remain unproven beyond the reference boundary.
