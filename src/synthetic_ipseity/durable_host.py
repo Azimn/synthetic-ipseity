@@ -90,8 +90,7 @@ class DurableIpseityHost:
             self._db.execute("BEGIN IMMEDIATE")
             try:
                 if version == 0:
-                    self._db.executescript(
-                        """
+                    schema = """
                         CREATE TABLE IF NOT EXISTS subjects (
                             subject_id TEXT NOT NULL,
                             epoch_id TEXT NOT NULL,
@@ -119,7 +118,9 @@ class DurableIpseityHost:
                         CREATE INDEX IF NOT EXISTS idx_ipseity_outbox
                             ON outbox(subject_id, epoch_id, delivery_state, id);
                         """
-                    )
+                    for statement in schema.split(";"):
+                        if statement.strip():
+                            self._db.execute(statement)
                     self._db.execute(f"PRAGMA user_version={HOST_SCHEMA_VERSION}")
                 checkpoint = organ.checkpoint()
                 self._db.execute(
