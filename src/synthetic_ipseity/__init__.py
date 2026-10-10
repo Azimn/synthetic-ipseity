@@ -37,7 +37,22 @@ from .epistemics import (
     EpistemicSourceMonitor, EvidenceKind, Stance,
 )
 
+from .epistemic_ledger import (
+    BeliefRevision,
+    BeliefRevisionRecord,
+    EpistemicState,
+    LongitudinalEpistemicHost,
+    Position,
+    LEDGER_SCHEMA_VERSION,
+)
+
 __all__ = [
+    "BeliefRevision",
+    "BeliefRevisionRecord",
+    "EpistemicState",
+    "LongitudinalEpistemicHost",
+    "Position",
+    "LEDGER_SCHEMA_VERSION",
     "EpistemicBatch",
     "EpistemicClaim",
     "EpistemicReceipt",
