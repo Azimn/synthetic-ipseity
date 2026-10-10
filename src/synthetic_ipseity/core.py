@@ -35,6 +35,11 @@ class Kind(str, Enum):
     IMAGINATION = "imagination"
     DREAM = "dream"
     SELF_SPEECH = "self_speech"
+    RECOGNITION_VAGUE = "recognition_vague"
+    RECOGNITION_POSSIBLE = "recognition_possible"
+    RECOGNITION_LIKELY = "recognition_likely"
+    RECOGNITION_STRONG = "recognition_strong"
+    EVIDENCE_CONFLICT = "evidence_conflict"
 
 
 class MemoryClass(str, Enum):
@@ -51,6 +56,9 @@ _TEXTUAL = frozenset({
     Kind.SEEN_TEXT, Kind.TOOL_TEXT, Kind.WORLD_OBJECT, Kind.IMPULSE,
     Kind.INTENTION, Kind.CONCERN, Kind.INFERENCE, Kind.IMAGINATION,
     Kind.DREAM, Kind.SELF_SPEECH,
+    Kind.RECOGNITION_VAGUE, Kind.RECOGNITION_POSSIBLE,
+    Kind.RECOGNITION_LIKELY, Kind.RECOGNITION_STRONG,
+    Kind.EVIDENCE_CONFLICT,
 })
 _ISSUER = object()
 
@@ -237,6 +245,19 @@ def _experience(signal: SourceSignal) -> str:
         return f"I recall dreaming of {_quoted(str(signal.value))}, not necessarily living it."
     if signal.kind is Kind.SELF_SPEECH:
         return f"I hear myself say: {_quoted(str(signal.value))}."
+    if signal.kind is Kind.RECOGNITION_VAGUE:
+        return "That face looks familiar, but I cannot place it."
+    if signal.kind is Kind.RECOGNITION_POSSIBLE:
+        return f"I wonder whether that might be {_quoted(str(signal.value))}."
+    if signal.kind is Kind.RECOGNITION_LIKELY:
+        return f"I think that is {_quoted(str(signal.value))}."
+    if signal.kind is Kind.RECOGNITION_STRONG:
+        return f"I feel fairly sure that is {_quoted(str(signal.value))}."
+    if signal.kind is Kind.EVIDENCE_CONFLICT:
+        return (
+            f"I have encountered conflicting indications about "
+            f"{_quoted(str(signal.value))}. I cannot yet tell which is right."
+        )
     if signal.kind is Kind.RECOLLECTION:
         phrase = _quoted(str(signal.value))
         if signal.memory_class is MemoryClass.LIVED:
