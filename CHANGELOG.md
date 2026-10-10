@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 Palinode second-thought candidate, 2026-10-10
+
+Added a compact, opt-in reflective-access gate over existing v0.7 provisional belief changes. A character may become aware of a prior change of mind only through host-attested, acquired and admitted cognitive input. Later recall of that reconsideration requires a real acknowledged subject-only outbox delivery plus separately attested memory acquisition. Append-only receipt tickets, subject/epoch checks, pre-ACK rejection, crash rollback and restart cases are tested. No automatic conversion of hidden bookkeeping into lived memory; no new independent architecture or consciousness claims.
+
 ## 0.7.0 provisional belief revisions, 2026-10-10
 
 Preserves the v0.6 source-correction and retraction ledger while adding an append-only host-attested provisional belief position trail, active-evidence validation, atomic transaction integration, restart tests and additive SQLite schema upgrade from ledger 1 to 2. The reference subject renderer remains isolated from engineering-only revisions. No parallel ledger is introduced and no behavioral improvement has been claimed.
