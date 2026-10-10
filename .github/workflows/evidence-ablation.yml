@@ -1,13 +1,8 @@
 name: evidence-ablation-real-cpu
 
-# Run the preregistered instrument-responsiveness test once on a PR,
-# then switch to manual-only after raw results have been preserved.
+# First real run completed successfully on 2026-10-10.
+# Manual-only, to avoid repeated model downloads for documentation edits.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/evidence-ablation.yml"
-      - "tools/evidence_ablation_cpu.py"
-      - "src/synthetic_ipseity/evidence_ablation.py"
   workflow_dispatch:
 
 permissions:
