@@ -279,7 +279,7 @@ class EpistemicSourceMonitorTests(unittest.TestCase):
             project([claim()], tick=-1)
         with self.assertRaises(TypeError):
             project([claim(), "not-evidence"])
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             EpistemicSourceMonitor(max_batch=True)
 
     def test_bounded_batch_fails_instead_of_dropping_conflict(self):
