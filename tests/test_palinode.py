@@ -211,8 +211,7 @@ class PalinodeTests(unittest.TestCase):
                 other_life.process_reflections(
                     1, [request(self.revision_id, epoch="life-2")]
                 )
-        self.assertIsNone(self.host.reflection_status(self.revision_id).notice_issued
-                          and False or None)
+        self.assertFalse(self.host.reflection_status(self.revision_id).notice_issued)
 
     def test_reconsideration_cannot_replay_same_revision_after_ack(self):
         self.drain_prior()
