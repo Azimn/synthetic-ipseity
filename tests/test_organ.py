@@ -353,6 +353,39 @@ class OrganTests(unittest.TestCase):
             with self.subTest(kwargs=kwargs), self.assertRaises((TypeError, ValueError)):
                 AccessPolicy(**kwargs)
 
+    def test_preview_does_not_mutate_until_commit(self):
+        pending = self.organ.preview(1, [incoming()])
+        self.assertEqual(self.organ.last_tick, -1)
+        self.assertEqual(self.organ.last_sequence, 0)
+        self.assertIn("cold", render_frame(pending.output.frame))
+        self.assertEqual(pending.next_checkpoint.last_sequence, 1)
+        delivered = self.organ.commit(pending)
+        self.assertEqual(delivered, pending.output)
+        self.assertEqual(self.organ.last_tick, 1)
+
+    def test_stale_proposal_rejected_after_another_commit(self):
+        first = self.organ.preview(1, [incoming()])
+        duplicate = self.organ.preview(1, [incoming()])
+        self.organ.commit(first)
+        with self.assertRaises(ValueError):
+            self.organ.commit(duplicate)
+
+    def test_preview_validation_error_cannot_advance(self):
+        with self.assertRaises(ValueError):
+            self.organ.preview(1, [incoming(sequence=2)])
+        self.assertEqual(self.organ.last_tick, -1)
+
+    def test_commit_rejects_other_subject_proposal(self):
+        other = SyntheticIpseityOrgan("bob", epoch_id="lab-1")
+        pending = other.preview(1, [incoming(subject="bob")])
+        with self.assertRaises(ValueError):
+            self.organ.commit(pending)
+        self.assertEqual(self.organ.last_sequence, 0)
+
+    def test_commit_requires_lease_and_valid_type(self):
+        with self.assertRaises(TypeError):
+            self.organ.commit(self.organ.checkpoint())
+
     def test_no_cross_subject_or_era_by_checkpoint_relabel(self):
         snap = self.organ.checkpoint().to_dict()
         snap["subject_id"] = "other-subject"
