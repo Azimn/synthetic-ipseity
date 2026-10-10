@@ -12,7 +12,26 @@ from .core import (
     render_frame,
 )
 
+from .organ import (
+    AccessPolicy,
+    Channel,
+    Observation,
+    IngressDecision,
+    OrganCheckpoint,
+    OrganOutput,
+    SyntheticIpseityOrgan,
+    SCHEMA_VERSION,
+)
+
 __all__ = [
+    "AccessPolicy",
+    "Channel",
+    "Observation",
+    "IngressDecision",
+    "OrganCheckpoint",
+    "OrganOutput",
+    "SyntheticIpseityOrgan",
+    "SCHEMA_VERSION",
     "AuditEnvelope",
     "AuditRecord",
     "Ipseity",
