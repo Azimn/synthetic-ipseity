@@ -65,6 +65,9 @@ _ALLOWED: Mapping[Kind, frozenset[Channel]] = {
     Kind.RECOGNITION_LIKELY: frozenset({Channel.WORLD}),
     Kind.RECOGNITION_STRONG: frozenset({Channel.WORLD}),
     Kind.EVIDENCE_CONFLICT: frozenset({Channel.COGNITION}),
+    Kind.EVIDENCE_RETRACTION: frozenset({Channel.COMMUNICATION}),
+    Kind.EVIDENCE_RESOLUTION: frozenset({Channel.COGNITION}),
+    Kind.EVIDENCE_REVISION: frozenset({Channel.COMMUNICATION, Channel.COGNITION}),
 }
 
 
