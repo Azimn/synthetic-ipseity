@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0 longitudinal provenance candidate, 2026-10-10
+
+Added an append-only, multi-tick epistemic evidence ledger, first admitted conflict notifications across restarts, independently supported and revisable provisional positions, and atomic SQLite commits of source evidence, revision history, organ checkpoint and subject-only outbox. Added restart, rollback, privacy, source independence, renderer isolation and historical immutability tests and a standalone diagnostic. This is structured, trusted-host source accounting, not independent truth detection or demonstrated character continuity improvement.
+
 ## 0.5.0 epistemic source-monitor candidate, 2026-10-10
 
 Added character-agnostic epistemic source monitor with host-attested evidence classification, typed source-to-observation adaptation, downgrade of unverified claimed lived memories, bounded qualitative recognition confidence, and explicit structured contradictions without unearned verdicts. Added adversarial source-monitor tests, durable restart integration, end-to-end diagnostic and evidence contract. This is a narrow structural source-monitoring mechanism, not semantic truth evaluation or proof of improved persona continuity.
