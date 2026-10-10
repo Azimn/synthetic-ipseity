@@ -21,7 +21,7 @@ from .epistemics import (
 )
 from .organ import AccessPolicy, Channel, Observation, SyntheticIpseityOrgan
 
-LEDGER_SCHEMA_VERSION = 1
+LEDGER_SCHEMA_VERSION = 2
 _ELIGIBLE = frozenset({
     EvidenceKind.OBSERVED, EvidenceKind.HEARD, EvidenceKind.READ,
     EvidenceKind.RECONSTRUCTED, EvidenceKind.LIVED_RECALL,
@@ -30,6 +30,52 @@ _ELIGIBLE = frozenset({
 
 class ChangeKind(str, Enum):
     RETRACT = "retract"
+
+
+class BeliefPosition(str, Enum):
+    AFFIRMS = "affirms"
+    DENIES = "denies"
+    SUSPENDS = "suspends"
+
+
+@dataclass(frozen=True)
+class ProvisionalBeliefRevision:
+    """Host-attested working belief update, not a claim of world truth."""
+
+    claim_key: str
+    position: BeliefPosition
+    reason: str
+    basis_sources: tuple[str, ...]
+    attested: bool = False
+
+    def __post_init__(self) -> None:
+        if type(self.position) is not BeliefPosition:
+            raise TypeError("position must be BeliefPosition")
+        if type(self.attested) is not bool:
+            raise TypeError("attested must be bool")
+        if not isinstance(self.claim_key, str) or not self.claim_key.strip() or len(self.claim_key) > 160:
+            raise ValueError("claim_key must be bounded nonblank text")
+        if not isinstance(self.reason, str) or not self.reason.strip() or len(self.reason) > 1000:
+            raise ValueError("reason must be bounded nonblank text")
+        if type(self.basis_sources) is not tuple or not 1 <= len(self.basis_sources) <= 32:
+            raise ValueError("basis_sources must be a bounded nonempty tuple")
+        if len(set(self.basis_sources)) != len(self.basis_sources):
+            raise ValueError("duplicate source references are not independent evidence")
+        if any(not isinstance(ref, str) or not ref.strip() or len(ref) > 160
+               for ref in self.basis_sources):
+            raise ValueError("invalid basis source reference")
+
+
+@dataclass(frozen=True)
+class ProvisionalBeliefRecord:
+    """Engineer-only append-only working-position history."""
+
+    tick: int
+    claim_key: str
+    previous: BeliefPosition | None
+    current: BeliefPosition
+    reason: str
+    basis_sources: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -143,6 +189,17 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
                    )"""
             )
             self._db.execute(
+                """CREATE TABLE IF NOT EXISTS epistemic_belief_history (
+                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     subject_id TEXT NOT NULL, epoch_id TEXT NOT NULL,
+                     tick INTEGER NOT NULL, claim_key TEXT NOT NULL,
+                     previous_position TEXT, new_position TEXT NOT NULL,
+                     reason TEXT NOT NULL, basis_sources_json TEXT NOT NULL,
+                     FOREIGN KEY(subject_id, epoch_id)
+                       REFERENCES subjects(subject_id, epoch_id)
+                   )"""
+            )
+            self._db.execute(
                 "INSERT OR IGNORE INTO epistemic_meta VALUES (?,?,?)",
                 (self.subject_id, self.epoch_id, LEDGER_SCHEMA_VERSION),
             )
@@ -151,6 +208,15 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
                 "WHERE subject_id=? AND epoch_id=?",
                 (self.subject_id, self.epoch_id),
             ).fetchone()[0]
+            if version == 1:
+                # Additive migration: evidence/current/source history is never
+                # rewritten, and v0.6 databases remain readable at v0.7.
+                self._db.execute(
+                    "UPDATE epistemic_meta SET ledger_schema=? "
+                    "WHERE subject_id=? AND epoch_id=? AND ledger_schema=1",
+                    (LEDGER_SCHEMA_VERSION, self.subject_id, self.epoch_id),
+                )
+                version = LEDGER_SCHEMA_VERSION
             if version != LEDGER_SCHEMA_VERSION:
                 raise ValueError("unsupported epistemic ledger schema")
             self._db.execute("COMMIT")
@@ -186,6 +252,38 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
             raise ValueError("claim_key must be nonblank")
         return self._status(claim_key)
 
+    def belief_position(self, claim_key: str) -> BeliefPosition | None:
+        """Engineer-only provisional stance; never raw model context."""
+        self._ensure_open()
+        if not isinstance(claim_key, str) or not claim_key.strip():
+            raise ValueError("claim_key must be nonblank")
+        row = self._db.execute(
+            "SELECT new_position FROM epistemic_belief_history "
+            "WHERE subject_id=? AND epoch_id=? AND claim_key=? "
+            "ORDER BY id DESC LIMIT 1",
+            (self.subject_id, self.epoch_id, claim_key),
+        ).fetchone()
+        return BeliefPosition(row[0]) if row else None
+
+    def belief_revisions(self, claim_key: str) -> tuple[ProvisionalBeliefRecord, ...]:
+        """Append-only engineering provenance for working belief changes."""
+        self._ensure_open()
+        if not isinstance(claim_key, str) or not claim_key.strip():
+            raise ValueError("claim_key must be nonblank")
+        rows = self._db.execute(
+            "SELECT tick, claim_key, previous_position, new_position, "
+            "reason, basis_sources_json FROM epistemic_belief_history "
+            "WHERE subject_id=? AND epoch_id=? AND claim_key=? ORDER BY id",
+            (self.subject_id, self.epoch_id, claim_key),
+        ).fetchall()
+        return tuple(
+            ProvisionalBeliefRecord(
+                tick, key, BeliefPosition(previous) if previous else None,
+                BeliefPosition(position), reason, tuple(json.loads(basis)),
+            )
+            for tick, key, previous, position, reason, basis in rows
+        )
+
     def history_count(self) -> int:
         """Engineer-only number of retained evidence revisions."""
         self._ensure_open()
@@ -197,7 +295,8 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
 
     def process_evidence(
         self, tick: int, updates: Iterable[EpistemicClaim | EvidenceChange],
-        *, fault: str | None = None,
+        *, belief_revisions: Iterable[ProvisionalBeliefRevision] = (),
+        fault: str | None = None,
     ) -> LedgerCommit:
         """Commit evidence and subject experience atomically in SQLite.
 
@@ -209,6 +308,14 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
         if fault not in (None, "after_ledger", "before_commit", "after_commit"):
             raise ValueError("invalid fault injection point")
         batch = tuple(updates)
+        proposed_positions = tuple(belief_revisions)
+        if len(proposed_positions) > self.policy.max_batch:
+            raise ValueError("too many provisional belief revisions")
+        if any(type(item) is not ProvisionalBeliefRevision for item in proposed_positions):
+            raise TypeError("belief_revisions must be ProvisionalBeliefRevision")
+        keys = [item.claim_key for item in proposed_positions]
+        if len(set(keys)) != len(keys):
+            raise ValueError("a claim key can be revised only once per tick")
         if len(batch) > self.policy.max_batch:
             raise ValueError("updates exceed organ maximum batch")
         for entry in batch:
@@ -347,6 +454,39 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
 
             if len(observations) > self.policy.max_batch:
                 raise ValueError("events and transitions exceed organ capacity")
+            # Positions are subjective working judgments with cited *active*
+            # source evidence, not votes that mutate authoritative truth.
+            for revision in proposed_positions:
+                if not revision.attested:
+                    raise ValueError("working belief revision lacks host attestation")
+                current_sources = dict(self._db.execute(
+                    "SELECT source_ref, stance FROM epistemic_current "
+                    "WHERE subject_id=? AND epoch_id=? AND claim_key=?",
+                    (self.subject_id, self.epoch_id, revision.claim_key),
+                ).fetchall())
+                if not current_sources:
+                    raise ValueError("working belief has no active source evidence")
+                if any(ref not in current_sources for ref in revision.basis_sources):
+                    raise ValueError("revision cites unknown, hidden or withdrawn evidence")
+                if revision.position is not BeliefPosition.SUSPENDS and not any(
+                    current_sources[ref] == revision.position.value
+                    for ref in revision.basis_sources
+                ):
+                    raise ValueError("provisional stance lacks matching support")
+                old = self.belief_position(revision.claim_key)
+                if old is revision.position:
+                    raise ValueError("unchanged position is not a new revision")
+                self._db.execute(
+                    "INSERT INTO epistemic_belief_history "
+                    "(subject_id, epoch_id, tick, claim_key, previous_position, "
+                    "new_position, reason, basis_sources_json) "
+                    "VALUES (?,?,?,?,?,?,?,?)",
+                    (
+                        self.subject_id, self.epoch_id, tick, revision.claim_key,
+                        old.value if old else None, revision.position.value,
+                        revision.reason, _json(list(revision.basis_sources)),
+                    ),
+                )
             if fault == "after_ledger":
                 raise RuntimeError("injected failure after ledger writes")
             pending = organ.preview(tick, observations)
