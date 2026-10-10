@@ -387,6 +387,30 @@ class LedgerHostTests(unittest.TestCase):
         self.assertEqual(self.host.history_count(), 0)
         self.assertEqual(self.host.checkpoint().last_sequence, 0)
 
+    def test_subject_only_renderer_port_accepts_longitudinal_host(self):
+        from synthetic_ipseity import SubjectOnlyRendererPort
+        inputs = []
+
+        def renderer(first_person: str) -> str:
+            inputs.append(first_person)
+            return "I should compare those accounts."
+
+        self.host.process_evidence(1, [claim("private-source-1")])
+        self.host.process_evidence(2, [
+            claim("private-source-2", Stance.DENIES)
+        ])
+        port = SubjectOnlyRendererPort(self.host, renderer)
+        first = port.deliver_next(now_ms=100)
+        second = port.deliver_next(now_ms=101)
+        self.assertIsNotNone(first)
+        self.assertIsNotNone(second)
+        self.assertEqual(len(inputs), 2)
+        self.assertIn("conflicting indications", inputs[1])
+        self.assertNotIn("private-source-1", "\n".join(inputs))
+        self.assertNotIn("private-source-2", "\n".join(inputs))
+        self.assertNotIn("epistemic_history", "\n".join(inputs))
+        self.assertEqual(self.host.pending_count(), 0)
+
     def test_change_metadata_validation(self):
         with self.assertRaises(TypeError):
             EvidenceChange("alice", "A", "door", "the door",
