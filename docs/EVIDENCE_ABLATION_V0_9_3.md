@@ -27,3 +27,7 @@ A trivial letter-B-only strategy must fail the polarity reversal gate. A perfect
 The workflow uses standard free public-repository Ubuntu CPU runners and public Apache-2.0 model weights with exact model revisions logged. Full question manifest, content SHA hashes, each letter's raw logit, chosen letters, run duration and scored result are stored in GitHub Actions artifacts. No paid inference APIs, private Pretorius data or schedule. It has a 25-minute job timeout and no result is silently imputed after failures.
 
 The original v0.9 strict six-field JSON results and v0.9.2 real logit-format calibration are not modified. This is **an instrument-responsiveness test, not a test of autonomous character continuity or subjective experience**.
+
+## Completed real trial and gate decision
+
+The first CPU trial [run #38095345440](https://github.com/Azimn/synthetic-ipseity/actions/runs/38095345440) produced **144/144** authentic rank-logit responses and a complete archived artifact. The preregistered correct-polarity-reversal gate **failed**: C/135M 0/10, D/135M 1/10, C/360M 0/10, D/360M 0/10. Choices were nearly identical under direct, polarity-reversed, and neutral evidence. [See raw-result provenance and complete negative findings](../results/EVIDENCE_ABLATION_REAL_2026_10_10.md). The original v0.9 and v0.9.2 scores remain unchanged. Follow-on runs are manual-only.
