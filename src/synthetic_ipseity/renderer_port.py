@@ -37,7 +37,7 @@ class SubjectOnlyRendererPort:
         host: DurableIpseityHost,
         renderer: Callable[[str], str],
     ) -> None:
-        if type(host) is not DurableIpseityHost:
+        if not isinstance(host, DurableIpseityHost):
             raise TypeError("renderer port requires DurableIpseityHost")
         if not callable(renderer):
             raise TypeError("renderer must be callable")
