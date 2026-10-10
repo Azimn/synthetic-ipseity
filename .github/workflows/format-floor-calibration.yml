@@ -1,0 +1,51 @@
+name: format-floor-calibration-real-cpu
+
+# This is a *separate* prospectively registered instrument experiment.
+# No paid APIs. Runs only for PRs that change instrument code or manual dispatch.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/format-floor-calibration.yml"
+      - "tools/format_floor_calibration.py"
+      - "src/synthetic_ipseity/format_probe.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: format-calibration-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpu-format-calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HOME: /tmp/ipseity-format-hf-models
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      TOKENIZERS_PARALLELISM: "false"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: CPU inference framework
+        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Pinned model tools and package
+        run: |
+          python -m pip install "transformers==4.57.3" "huggingface_hub==0.36.0" safetensors
+          python -m pip install -e .
+      - name: Perform ACTUAL next-token and free-letter calibration
+        run: python -m tools.format_floor_calibration --outdir format-results
+      - name: Preserve complete and partial REAL calibration outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: format-real-cpu-${{ github.run_id }}
+          path: format-results/
+          if-no-files-found: warn
+          retention-days: 7
