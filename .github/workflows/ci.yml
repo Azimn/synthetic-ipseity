@@ -20,4 +20,5 @@ jobs:
       - run: python tools/diagnose.py
       - run: python tools/organ_diagnostic.py
       - run: python tools/durable_diagnostic.py
+      - run: python tools/epistemic_diagnostic.py
       - run: python -m compileall -q src tests tools
