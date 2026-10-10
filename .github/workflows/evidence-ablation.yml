@@ -1,0 +1,46 @@
+name: evidence-ablation-real-cpu
+
+# First real run completed successfully on 2026-10-10.
+# Manual-only, to avoid repeated model downloads for documentation edits.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evidence-ablation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpu-ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HOME: /tmp/ipseity-ablation-hf
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      TOKENIZERS_PARALLELISM: "false"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU PyTorch
+        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install inference tools and package
+        run: |
+          python -m pip install "transformers==4.57.3" "huggingface_hub==0.36.0" safetensors
+          python -m pip install -e .
+      - name: Run real original/reversal/neutral test
+        run: python -m tools.evidence_ablation_cpu --outdir ablation-results
+      - name: Archive complete and partial original/raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-ablation-${{ github.run_id }}
+          path: ablation-results/
+          if-no-files-found: warn
+          retention-days: 7

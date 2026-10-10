@@ -25,6 +25,7 @@ jobs:
       - run: python tools/belief_revision_diagnostic.py
       - run: python tools/palinode_diagnostic.py
       - run: python -m unittest discover -s tests -p 'test_format_probe.py' -v
+      - run: python -m unittest discover -s tests -p 'test_evidence_ablation.py' -v
       - run: python tools/continuity_benchmark.py prepare --out /tmp/ipseity-pilot-manifest.json
       - run: python tools/continuity_benchmark.py simulate --manifest /tmp/ipseity-pilot-manifest.json --out /tmp/ipseity-pilot-fixtures.jsonl
       - run: python tools/continuity_benchmark.py evaluate --manifest /tmp/ipseity-pilot-manifest.json --responses /tmp/ipseity-pilot-fixtures.jsonl --out /tmp/ipseity-pilot-calibration.json
