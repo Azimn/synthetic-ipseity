@@ -197,6 +197,7 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
         return self._db.execute(
             "SELECT topic, source_ref, stance FROM epistemic_evidence "
             "WHERE subject_id=? AND epoch_id=? AND claim_key=? AND stance IS NOT NULL "
+            "AND (kind!='lived_recall' OR lived_verified=1) "
             "ORDER BY sequence",
             (self.subject_id, self.epoch_id, claim_key),
         ).fetchall()
@@ -387,7 +388,7 @@ class LongitudinalEpistemicHost(DurableIpseityHost):
                         current.last_sequence + 1 + index, tick,
                         claim.kind.value, claim.source_ref,
                         claim.claim_key, claim.topic,
-                        claim.stance.value if claim.stance else None,
+                        claim.stance.value if _eligible(claim) else None,
                         int(claim.lived_verified),
                         hashlib.sha256(claim.text.encode("utf-8")).hexdigest(),
                     ),
