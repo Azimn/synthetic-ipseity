@@ -1,13 +1,8 @@
 name: natural-witness-real-cpu
 
-# One preregistered local-model experiment on the implementation PR.
-# Switch to manual-only after a complete run; no scheduled/paid calls.
+# First preregistered real run completed successfully on 2026-10-11.
+# Manual-only thereafter; routine PR changes must not redownload a 3B model.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/natural-witness-real-cpu.yml"
-      - "tools/natural_witness_cpu.py"
-      - "src/synthetic_ipseity/natural_witness.py"
   workflow_dispatch:
 
 permissions:
