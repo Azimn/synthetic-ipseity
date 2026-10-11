@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.6 engineer-side witness comparison reference — 2026-10-11
+
+Added a deterministic schema-restricted witness comparator, explicit fail-closed invalid/ambiguous source abstention, independent direct-verification handling, and a reproducible no-model diagnostic over the original 80 v0.9.5 question records, 320 fresh heldout ordered/reordered records, plus 21 adversarial and malformed fixtures. This is an instrumentation control and is never wired directly into the character's subject-access interface. Earlier language-model negative results are preserved.
+
 ## 0.9.5 report versus direct-world-truth evidence instrument, 2026-10-10
 
 New independent semantic-competence experiment with eight fresh case stems, two isolated questions, five original/contradictory/verified/counterfactual/null evidence conditions, model-free oracle and positional/abstention sensitivity tests, official quantized Qwen2.5-3B direct CPU inference, pinned repo/model digests and archival raw records. The prespecified acceptance gate tests correct witness-relation flips and independently verified-state flips alongside null abstention. The actual 80-call official Qwen3B CPU run found correct verified world-truth state reversals 8/8, neutral abstentions 24/24, and zero-report detection 8/8; however witness statement agreement/disagreement reversed correctly only 3/8, so the preregistered overall instrument gate FAILED. See results/SOURCE_TRUTH_REAL_QWEN3B_2026_10_10.md for raw checksums and negative findings. No change to synthetic cognition or previous empirical results.
