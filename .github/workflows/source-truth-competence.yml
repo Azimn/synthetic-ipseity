@@ -1,13 +1,8 @@
 name: source-truth-competence-real-cpu
 
-# First real Qwen3B run on PR; subsequent experiments manual-only.
-# No paid completion APIs or GPU runners.
+# Real experiment already launched from the implementation PR.
+# Manual-only for any repeat run; do not redownload model on every code update.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/source-truth-competence.yml"
-      - "tools/source_truth_cpu.py"
-      - "src/synthetic_ipseity/source_truth_capacity.py"
   workflow_dispatch:
 
 permissions:
