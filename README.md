@@ -16,6 +16,8 @@ The v0.9.5 Qwen 3B model correctly reversed directly verified instrument reading
 
 [Reference grammar and acceptance contract](docs/WITNESS_REFERENCE_V0_9_6.md), [strict parser](src/synthetic_ipseity/witness_reference.py), [independent diagnostic](tools/witness_reference_diagnostic.py), and [negative controls](tests/test_witness_reference.py). The reference covers a specified machine-generated incident-record format, not general first-person natural language. Model and character-continuity efficacy remain unvalidated.
 
+**Observed CI result:** 80/80 historical formatted choices correct, 320/320 fresh heldout choices correct, 21/21 adversarial records rejected without partial conclusions. [Read the dated evidence report](results/WITNESS_REFERENCE_REAL_2026_10_11.md).
+
 ## Report-versus-world-truth capacity (v0.9.5)
 
 Previous local readers failed when asked whether contradicting witness statements established world truth. This separately preregistered capacity experiment directly distinguishes **witness agreement/disagreement** from **independently verified physical truth**, using eight new laboratory topics, real official quantized Qwen2.5-3B inference, no A/B/C answer-position labels, and exact counterfactual reversals. It is a *measurement competence gate*, not an identity or cognition experiment: no new Synthetic Ipseity organ, no test of autonomous character behavior, and no retrospective rescore of earlier negative results.
