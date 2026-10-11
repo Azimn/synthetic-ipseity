@@ -10,6 +10,14 @@ An independent, character-agnostic research component for **first-person subject
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
 
+## Deterministic source-comparison reference (v0.9.6)
+
+The v0.9.5 Qwen 3B model correctly reversed directly verified instrument readings (8/8) but failed to compare two explicitly attributed witness reports reliably (only 3/8 correct agreement/disagreement reversals). We now have a **narrow and auditable deterministic reference**, entirely separate from Synthetic Ipseity's cognitive organ. It parses the two named witnesses, compares their categorical claims, and distinguishes testimony from an independent direct reading. Any missing, duplicated, ambiguous or unexpected source record is rejected rather than hallucinated.
+
+[Reference grammar and acceptance contract](docs/WITNESS_REFERENCE_V0_9_6.md), [strict parser](src/synthetic_ipseity/witness_reference.py), [independent diagnostic](tools/witness_reference_diagnostic.py), and [negative controls](tests/test_witness_reference.py). The reference covers a specified machine-generated incident-record format, not general first-person natural language. Model and character-continuity efficacy remain unvalidated.
+
+**Observed CI result:** 80/80 historical formatted choices correct, 320/320 fresh heldout choices correct, 21/21 adversarial records rejected without partial conclusions. [Read the dated evidence report](results/WITNESS_REFERENCE_REAL_2026_10_11.md).
+
 ## Report-versus-world-truth capacity (v0.9.5)
 
 Previous local readers failed when asked whether contradicting witness statements established world truth. This separately preregistered capacity experiment directly distinguishes **witness agreement/disagreement** from **independently verified physical truth**, using eight new laboratory topics, real official quantized Qwen2.5-3B inference, no A/B/C answer-position labels, and exact counterfactual reversals. It is a *measurement competence gate*, not an identity or cognition experiment: no new Synthetic Ipseity organ, no test of autonomous character behavior, and no retrospective rescore of earlier negative results.
