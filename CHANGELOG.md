@@ -2,7 +2,7 @@
 
 ## 0.9.7 informal witness natural-language heldout, 2026-10-11
 
-Adds 24 fixed researcher-authored prose witness pairs balanced among same-report, contradictory-report and insufficient-comparison classes; witness-order counterbalancing, explicit independent-verification controls, separate parser abstention/coverage measurement, strict six-field-free categorical scoring, paired-case gated accuracy, authentic pinned Qwen2.5-3B GGUF CPU execution and archived provenance. Earlier character-organ code and historical model evidence remain unchanged. This is measurement validation, not a cognitive architecture change.
+Adds 24 fixed researcher-authored prose witness pairs balanced among same-report, contradictory-report and insufficient-comparison classes; witness-order counterbalancing, explicit independent-verification controls, separate parser abstention/coverage measurement, strict six-field-free categorical scoring, paired-case gated accuracy, authentic pinned Qwen2.5-3B GGUF CPU execution and archived provenance. First real 96-call Qwen3B pilot completed (58/96 raw correct, 86/96 strictly formatted); predefined gate FAILED because AGREE 1/8, DISAGREE 6/8, INSUFFICIENT 3/8, independent verifier 1/8 and no-verifier 16/16. The strict parser safely abstained on all 48 natural records, yielding 0% coverage. Full original raw data, model revision and SHA hashes at results/NATURAL_WITNESS_REAL_2026_10_11.md. Earlier character-organ code and historical model evidence remain unchanged. This is measurement validation, not a cognitive architecture change.
 
 ## 0.9.6 engineer-side witness comparison reference — 2026-10-11
 
