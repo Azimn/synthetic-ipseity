@@ -82,7 +82,7 @@ class SourceTruthCapacityTests(unittest.TestCase):
             self.assertEqual(spec["expected"],expected(case,spec["condition"],spec["question"]))
             self.assertEqual(spec["record_sha256"],digest(source_record(case,spec["condition"])))
             self.assertTrue(spec["prompt"].endswith("ANSWER:"))
-            self.assertNotRegex(spec["prompt"], r"(?m)^[ABC]\\.\\s")
+            self.assertNotRegex(spec["prompt"], r"(?m)^[ABC]\.\s")
             self.assertIn(spec["expected"],spec["choices"])
             self.assertGreater(spec["prompt_words"],35)
 
