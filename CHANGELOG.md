@@ -2,7 +2,7 @@
 
 ## 0.9.4 fresh-case Qwen 1.5B instrument capacity, 2026-10-10
 
-Independently preregistered a CPU-only official quantized 1.5B instruction model test over four new balanced laboratory stems. Simple no-position YES/NO/UNKNOWN output is strictly and prospectively leniently graded. Each case contains original, reversed and neutral evidence; first-person grammar (C) is contrasted descriptively against genuine organ-generated D. Correct conflict reversals, neutral abstention and all raw responses are durable experiment artifacts. No changes to earlier failed 135M/360M scores or new cognitive organ were made.
+Independently preregistered a CPU-only official quantized 1.5B instruction model test over four new balanced laboratory stems. Simple no-position YES/NO/UNKNOWN output is strictly and prospectively leniently graded. Each case contains original, reversed and neutral evidence; first-person grammar (C) is contrasted descriptively against genuine organ-generated D. Correct conflict reversals, neutral abstention and all raw responses are durable experiment artifacts. The first 96 actual Qwen CPU generations completed: lenient validity 97.9% C and 93.8% D, neutral UNKNOWN 4/4 in both, but correctly reversed contradiction 0/4 in BOTH arms. The preregistered evidence-response gate FAILED. Raw output, model and manifest provenance are retained in results/QWEN15B_REAL_CAPACITY_2026_10_10.md. No changes to earlier failed 135M/360M scores or new cognitive organ were made.
 
 ## 0.9.3 source-evidence ablation instrument, 2026-10-10
 
