@@ -1,13 +1,8 @@
 name: qwen-15b-evidence-responsiveness
 
-# One real-model capacity check on PR creation; manual reruns only thereafter.
-# Public-repository CPU runner; never a paid completion API.
+# Real model capacity check completed on 2026-10-10.
+# Manual-only thereafter: never redownload weights for documentation changes.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/qwen-capacity.yml"
-      - "tools/qwen_capacity_cpu.py"
-      - "src/synthetic_ipseity/qwen_capacity.py"
   workflow_dispatch:
 
 permissions:
