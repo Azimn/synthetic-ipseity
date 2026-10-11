@@ -2,7 +2,7 @@
 
 ## 0.9.6 engineer-side witness comparison reference — 2026-10-11
 
-Added a deterministic schema-restricted witness comparator, explicit fail-closed invalid/ambiguous source abstention, independent direct-verification handling, and a reproducible no-model diagnostic over the original 80 v0.9.5 question records, 320 fresh heldout ordered/reordered records, plus 21 adversarial and malformed fixtures. This is an instrumentation control and is never wired directly into the character's subject-access interface. Earlier language-model negative results are preserved.
+Added a deterministic schema-restricted witness comparator, explicit fail-closed invalid/ambiguous source abstention, independent direct-verification handling, and a reproducible no-model diagnostic over the original 80 v0.9.5 question records, 320 fresh heldout ordered/reordered records, plus 21 adversarial and malformed fixtures. The complete CI reference diagnostic passed 80/80 historical decisions, 320/320 fresh heldout decisions and 21/21 safe adversarial abstentions; see results/WITNESS_REFERENCE_REAL_2026_10_11.md. This is an instrumentation control and is never wired directly into the character's subject-access interface. Earlier language-model negative results are preserved.
 
 ## 0.9.5 report versus direct-world-truth evidence instrument, 2026-10-10
 
