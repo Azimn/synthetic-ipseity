@@ -65,3 +65,7 @@ Actual bounded local model inference (explicit workflow on GitHub):
     python -m tools.natural_witness_cpu --outdir natural-witness-results
 
 The GitHub workflow executes the initial real model run for this PR and saves all complete/partial results as an Actions artifact; later it is switched to manual-only. No automatic repeated scheduled jobs.
+
+## Completed real data and acceptance decision
+
+The initial actual 96-call Qwen3B experiment [run #38143817385](https://github.com/Azimn/synthetic-ipseity/actions/runs/38143817385) completed with full raw inputs/answers and pinned model SHA. The strict parser rejected 48/48 free-prose records, coverage 0%. Model raw answer accuracy was 58/96 (60.4%) and categorical strict format validity 86/96 (89.6%). Paired scores: AGREE 1/8, DISAGREE 6/8, INSUFFICIENT 3/8, independent verification YES 1/8, verification NO 16/16. As three groups failed their prespecified minimum, **the conjunctive model qualification gate FAILED**. The [unchanged preregistration and full audit report](../results/NATURAL_WITNESS_REAL_2026_10_11.md) include case-level errors, provenance and original file digests. Subsequent model calls are manual-only. The corpus still needs independent human annotation; this was not a Palinode efficacy test.
