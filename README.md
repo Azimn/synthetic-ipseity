@@ -16,6 +16,8 @@ The v0.9.6 deterministic comparator passed all 80 historical and 320 heldout que
 
 [Prespecified protocol and validity limits](docs/NATURAL_WITNESS_PROTOCOL_V0_9_7.md) · [frozen corpus](src/synthetic_ipseity/natural_witness.py) · [reference coverage diagnostic](tools/natural_witness_reference.py) · [real-model workflow](.github/workflows/natural-witness-real-cpu.yml). The corpus was written for this test and is **not independently blinded human annotation**; no claim about Palinode benefit follows from accuracy alone.
 
+**Observed first real model run (October 11, 2026):** 96/96 complete, aggregate 58/96 correct (60.4%). Paired-case correctness: AGREE **1/8**, DISAGREE **6/8**, INSUFFICIENT **3/8**, verification-positive **1/8**, verification-negative **16/16**. The predefined gate **FAILED**, despite strict-parser safe abstention 48/48. [Permanent real results and hashes](results/NATURAL_WITNESS_REAL_2026_10_11.md), [Actions source run](https://github.com/Azimn/synthetic-ipseity/actions/runs/38143817385).
+
 ## Deterministic source-comparison reference (v0.9.6)
 
 The v0.9.5 Qwen 3B model correctly reversed directly verified instrument readings (8/8) but failed to compare two explicitly attributed witness reports reliably (only 3/8 correct agreement/disagreement reversals). We now have a **narrow and auditable deterministic reference**, entirely separate from Synthetic Ipseity's cognitive organ. It parses the two named witnesses, compares their categorical claims, and distinguishes testimony from an independent direct reading. Any missing, duplicated, ambiguous or unexpected source record is rejected rather than hallucinated.
