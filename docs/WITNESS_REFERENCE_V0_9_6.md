@@ -43,3 +43,7 @@ The predeclared reference gate is **80/80** historical correct choices, **320/32
 For a legitimate future study, use balanced free-form human-authored testimony and independently annotated relations, explicitly measuring coverage and abstention rates for the strict parser. Separately evaluate language model interpretations with source attribution and action-based character continuity. Do not mistake perfect machine-grammar parsing for general artificial cognition.
 
 The original v0.9-v0.9.5 empirical data and all negative observations remain intact.
+
+## Observed deterministic diagnostic
+
+The complete 2026-10-11 CI run [38142093965](https://github.com/Azimn/synthetic-ipseity/actions/runs/38142093965) passed **80/80** original structured records, **320/320** fresh reordered/untouched structured records, and **21/21** intentionally invalid/adversarial records rejected. The test suite passed all **280** standard unittests on Python 3.11, 3.12 and 3.13. This is an engineering grammar-conformance result, *not* language comprehension or character-continuity evidence. [Complete dated result and scope](../results/WITNESS_REFERENCE_REAL_2026_10_11.md).
