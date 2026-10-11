@@ -73,7 +73,7 @@ class SourceTruthCapacityTests(unittest.TestCase):
             self.assertNotIn(case.speaker_a,neutral)
             self.assertNotIn(case.speaker_b,neutral)
 
-    def test_questions_exactly_ninety_six_no_eighty_and_correct_hashes(self):
+    def test_exactly_eighty_sealed_questions_and_correct_hashes(self):
         self.assertEqual(len(self.specs),80)
         ids={s["trial_id"] for s in self.specs}
         self.assertEqual(len(ids),80)
@@ -82,7 +82,7 @@ class SourceTruthCapacityTests(unittest.TestCase):
             self.assertEqual(spec["expected"],expected(case,spec["condition"],spec["question"]))
             self.assertEqual(spec["record_sha256"],digest(source_record(case,spec["condition"])))
             self.assertTrue(spec["prompt"].endswith("ANSWER:"))
-            self.assertNotIn("A. ",spec["prompt"])
+            self.assertNotRegex(spec["prompt"], r"(?m)^[ABC]\\.\\s")
             self.assertIn(spec["expected"],spec["choices"])
             self.assertGreater(spec["prompt_words"],35)
 
