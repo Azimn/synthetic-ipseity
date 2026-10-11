@@ -1,0 +1,50 @@
+name: natural-witness-real-cpu
+
+# One preregistered local-model experiment on the implementation PR.
+# Switch to manual-only after a complete run; no scheduled/paid calls.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/natural-witness-real-cpu.yml"
+      - "tools/natural_witness_cpu.py"
+      - "src/synthetic_ipseity/natural_witness.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: natural-witness-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  natural-prose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HOME: /tmp/ipseity-natural-qwen3b
+      CMAKE_ARGS: "-DGGML_NATIVE=OFF"
+      OMP_NUM_THREADS: "2"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU-only model runtime
+        run: |
+          python -m pip install "llama-cpp-python==0.3.16" "huggingface_hub==0.36.0"
+          python -m pip install -e .
+      - name: Verify frozen baseline and compute coverage
+        run: python tools/natural_witness_reference.py --report natural-witness-results/reference-before-model.json
+      - name: Run real pinned Qwen3B natural-language witness study
+        run: python -m tools.natural_witness_cpu --outdir natural-witness-results
+      - name: Preserve sealed corpus, raw and partial outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: natural-witness-qwen3b-${{ github.run_id }}
+          path: natural-witness-results/
+          if-no-files-found: warn
+          retention-days: 7
