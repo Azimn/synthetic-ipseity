@@ -16,6 +16,8 @@ Previous local readers failed when asked whether contradicting witness statement
 
 See [frozen v0.9.5 source/truth protocol](docs/SOURCE_TRUTH_CAPACITY_V0_9_5.md) and [real CPU experiment workflow](.github/workflows/source-truth-competence.yml).
 
+**Observed real Qwen 3B result:** 80/80 actual outputs, 100% strict format, direct-world-state reversals 8/8, no-reading UNKNOWN 24/24, no-witness NO_REPORTS 8/8, but witness-agreement reversals only **3/8**. The preregistered instrument-readiness gate **failed**. [Complete negative findings, model and raw artifact checksums](results/SOURCE_TRUTH_REAL_QWEN3B_2026_10_10.md). No cognitive-organ benefit is inferred.
+
 ## Fresh-stem Qwen 1.5B instrument capacity (v0.9.4)
 
 The earlier tiny SmolLM2 models did not reliably change answers when witness evidence reversed. Instead of modifying the cognitive organ, this separately registered calibration uses the official quantized Qwen2.5-1.5B-Instruct on a CPU-only hosted runner, four **fresh** balanced laboratory case stems, and no A/B/C option positions. A simple YES/NO/UNKNOWN protocol tests witness disagreement, evidence reversal, neutral abstention, and exploratory noticing/recollection questions. Condition D runs the actual Palinode organ; C is a meaning-matched grammatical control. The prespecified responsiveness gate requires at least 2/4 correct reversals and 50% neutral abstention in **each** arm. **First real Qwen 1.5B run: FAILED the reversal gate (0/4 in both C and D), despite 100% neutral UNKNOWN and 66.7%/72.9% overall accuracy.** This is a measured instrument limitation, not a synthetic self benefit. Read the [full negative results and model hashes](results/QWEN15B_REAL_CAPACITY_2026_10_10.md).
