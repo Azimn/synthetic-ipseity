@@ -31,3 +31,7 @@ If the model fails, preserve the complete real negative result and do not tune t
 ## Reproduction
 
 Run the model-free contract tests with Python unittest. Local real inference: pip install -e . then pip install llama-cpp-python==0.3.16 huggingface_hub==0.36.0, then python -m tools.qwen_capacity_cpu --outdir capacity-results. The independent CPU workflow archives raw outputs. No model-free mock counts as an actual scientific result.
+
+## Completed real inference and frozen gate decision
+
+The first full 96-generation Qwen CPU run [#38100242123](https://github.com/Azimn/synthetic-ipseity/actions/runs/38100242123) completed with no model download or inference failure. Both arms passed 4/4 no-evidence UNKNOWN conflict controls but both failed the prespecified 2/4 correct-reversal threshold: C 0/4, D 0/4. Overall answer accuracy was 66.7% C and 72.9% D, inflated by consistently correct neutral and witness-count questions; never interpret that difference as a cognitive advantage. Four actual free-form outputs violated even the prospectively lenient one-word parser. The [permanent empirical results record](../results/QWEN15B_REAL_CAPACITY_2026_10_10.md) includes raw ZIP, model repository, exact GGUF digest and all source checksums. Subsequent runs are manual-only. Original failure reports remain unchanged.
