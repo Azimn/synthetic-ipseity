@@ -10,6 +10,12 @@ An independent, character-agnostic research component for **first-person subject
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
 
+## Fresh-stem Qwen 1.5B instrument capacity (v0.9.4)
+
+The earlier tiny SmolLM2 models did not reliably change answers when witness evidence reversed. Instead of modifying the cognitive organ, this separately registered calibration uses the official quantized Qwen2.5-1.5B-Instruct on a CPU-only hosted runner, four **fresh** balanced laboratory case stems, and no A/B/C option positions. A simple YES/NO/UNKNOWN protocol tests witness disagreement, evidence reversal, neutral abstention, and exploratory noticing/recollection questions. Condition D runs the actual Palinode organ; C is a meaning-matched grammatical control. The prespecified responsiveness gate requires at least 2/4 correct reversals and 50% neutral abstention in **each** arm.
+
+See [Qwen capacity preregistration](docs/QWEN15B_CAPACITY_V0_9_4.md), [model-free controls](tests/test_qwen_capacity.py), and the [real CPU workflow](.github/workflows/qwen-capacity.yml). A complete experiment is not proof of behavioral identity continuity.
+
 ## Evidence-ablation instrument gate (v0.9.3)
 
 The v0.9.2 calibration revealed an answer-position bias in extremely small local models. **Actual v0.9.3 evidence-ablation confirmed an instrument failure:** out of ten polarity-sensitive comparisons per arm/model, correct evidence reversals were C/135M 0, D/135M 1, C/360M 0, D/360M 0. [Full negative results and raw hashes](results/EVIDENCE_ABLATION_REAL_2026_10_10.md). This separately registered **evidence responsiveness** test now contrasts the same source record with reversed witness testimony and a neutral no-evidence record, with questions, A/B/C option positions, and recipient model held fixed. A classifier must actually **reverse its answers correctly** when the evidence polarity reverses to pass the gate. The full [v0.9.3 protocol](docs/EVIDENCE_ABLATION_V0_9_3.md) and [real CPU workflow](.github/workflows/evidence-ablation.yml) keep this distinct from both the original six-field pilot and v0.9.2 format calibration.
