@@ -1,0 +1,43 @@
+name: source-truth-competence-real-cpu
+
+# Real experiment already launched from the implementation PR.
+# Manual-only for any repeat run; do not redownload model on every code update.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-truth-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qwen3b:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HOME: /tmp/ipseity-qwen3b-cache
+      CMAKE_ARGS: "-DGGML_NATIVE=OFF"
+      OMP_NUM_THREADS: "2"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU-only inference dependencies
+        run: |
+          python -m pip install "llama-cpp-python==0.3.16" "huggingface_hub==0.36.0"
+          python -m pip install -e .
+      - name: Run actual Qwen3B witness-vs-verified-truth capacity test
+        run: python -m tools.source_truth_cpu --outdir source-truth-results
+      - name: Archive raw outputs or partial evidence on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-truth-qwen3b-${{ github.run_id }}
+          path: source-truth-results/
+          retention-days: 7
+          if-no-files-found: warn

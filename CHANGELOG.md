@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.5 report versus direct-world-truth evidence instrument, 2026-10-10
+
+New independent semantic-competence experiment with eight fresh case stems, two isolated questions, five original/contradictory/verified/counterfactual/null evidence conditions, model-free oracle and positional/abstention sensitivity tests, official quantized Qwen2.5-3B direct CPU inference, pinned repo/model digests and archival raw records. The prespecified acceptance gate tests correct witness-relation flips and independently verified-state flips alongside null abstention. The actual 80-call official Qwen3B CPU run found correct verified world-truth state reversals 8/8, neutral abstentions 24/24, and zero-report detection 8/8; however witness statement agreement/disagreement reversed correctly only 3/8, so the preregistered overall instrument gate FAILED. See results/SOURCE_TRUTH_REAL_QWEN3B_2026_10_10.md for raw checksums and negative findings. No change to synthetic cognition or previous empirical results.
+
 ## 0.9.4 fresh-case Qwen 1.5B instrument capacity, 2026-10-10
 
 Independently preregistered a CPU-only official quantized 1.5B instruction model test over four new balanced laboratory stems. Simple no-position YES/NO/UNKNOWN output is strictly and prospectively leniently graded. Each case contains original, reversed and neutral evidence; first-person grammar (C) is contrasted descriptively against genuine organ-generated D. Correct conflict reversals, neutral abstention and all raw responses are durable experiment artifacts. The first 96 actual Qwen CPU generations completed: lenient validity 97.9% C and 93.8% D, neutral UNKNOWN 4/4 in both, but correctly reversed contradiction 0/4 in BOTH arms. The preregistered evidence-response gate FAILED. Raw output, model and manifest provenance are retained in results/QWEN15B_REAL_CAPACITY_2026_10_10.md. No changes to earlier failed 135M/360M scores or new cognitive organ were made.
