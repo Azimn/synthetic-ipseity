@@ -1,0 +1,44 @@
+name: qwen-15b-evidence-responsiveness
+
+# Real model capacity check completed on 2026-10-10.
+# Manual-only thereafter: never redownload weights for documentation changes.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qwen-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capacity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HOME: /tmp/ipseity-qwen-model
+      CMAKE_ARGS: "-DGGML_NATIVE=OFF"
+      OMP_NUM_THREADS: "2"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile local CPU inference backend
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "llama-cpp-python==0.3.16" "huggingface_hub==0.36.0"
+          python -m pip install -e .
+      - name: Run REAL official Qwen 1.5B quantized model capacity experiment
+        run: python -m tools.qwen_capacity_cpu --outdir qwen-capacity-results
+      - name: Preserve raw and partial outcomes including model SHA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qwen-evidence-${{ github.run_id }}
+          path: qwen-capacity-results/
+          retention-days: 7
+          if-no-files-found: warn
