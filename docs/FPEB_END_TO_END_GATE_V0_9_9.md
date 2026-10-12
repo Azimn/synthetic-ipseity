@@ -58,3 +58,7 @@ Finally, persistence currently guarantees committed subject frames plus cursor i
 - **Not a claim:** synthetic sentience, conscious inner life, universal no-bypass proof, first-in-field priority.
 
 **Release recommendation:** keep v1.0 gated until at least one real host integration has no unmanaged model input path and there is a reproducible end-to-end demonstration under actual renderer swap. Do not wait for a statistically positive consciousness/behavior claim to describe the reference library as engineering-capable, but do not market it as an empirically validated cognitive breakthrough.
+
+## Completed reproducible execution
+
+Initial real trusted-host integration [Actions run #38205046467](https://github.com/Azimn/synthetic-ipseity/actions/runs/38205046467) passed on Python 3.11, 3.12 and 3.13, including **306 tests** and **32/32 private-world differential variants** per Python version. The experiment confirmed two real outbox deliveries after restart, byte-identical authorized text under changes to hidden information and renderer callback, legitimate numeric observation preservation and no forced narration on a silent tick. This is not a real-model swap or whole-host global no-bypass proof. [Dated measured report](../results/FPEB_REFERENCE_CONFORMANCE_2026_10_11.md).
