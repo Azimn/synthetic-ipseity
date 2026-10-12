@@ -283,9 +283,8 @@ class LaboratoryActionGateway:
         silently treating unrelated output as character experience.
         """
         self._ensure_open()
-        if type(host) is not DurableIpseityHost or (
-            host.subject_id,host.epoch_id)!=(self.subject_id,self.epoch_id)
-        ):
+        if (type(host) is not DurableIpseityHost
+                or (host.subject_id,host.epoch_id)!=(self.subject_id,self.epoch_id)):
             raise ValueError("feedback requires matching authorized host")
         if fault not in (None,"after_feedback_commit"):
             raise ValueError("unsupported injected fault")
