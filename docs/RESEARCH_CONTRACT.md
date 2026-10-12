@@ -10,6 +10,8 @@ Scope: character-agnostic cognitive interface, independent from subject identity
 
 It is *not* phenomenal consciousness, sentience, a metaphysical self, a persona prompt, an autobiographical database, a language model, or a complete cognitive architecture. The name is operational vocabulary, not evidence of subjective experience.
 
+The detailed normative treatment of this principle is [The First-Person Experiential Boundary](FIRST_PERSON_EXPERIENTIAL_BOUNDARY.md): a situated inner-dialogue interface and no direct hidden host data at subject access, with explicit scope and falsification criteria. It refines this contract without granting the host or narrator any new rights.
+
 ## Hard invariant
 
 For every item entering a subject-facing, reportable workspace, there must exist an authorized acquisition path, a first-person projection, and an explicit admission decision. The subject does not receive numeric state, hidden causal explanations, raw database payloads, private record identifiers, neural activations, privileged provenance, or executive control-plane instructions solely because the host has them.
