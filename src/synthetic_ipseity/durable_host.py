@@ -171,6 +171,7 @@ class DurableIpseityHost:
         observations: Iterable[Observation],
         *,
         fault: str | None = None,
+        require_drained: bool = False,
     ) -> CommitReceipt:
         """Atomically advance the organ and append admitted output.
 
@@ -184,11 +185,24 @@ class DurableIpseityHost:
         self._ensure_open()
         if fault not in (None, "after_preview", "before_commit", "after_commit"):
             raise ValueError("unknown fault injection point")
+        if type(require_drained) is not bool:
+            raise TypeError("require_drained must be bool")
         # Materialize before acquiring the transaction. A generator cannot
         # partially perform a commit by failing during iteration.
         batch = tuple(observations)
         self._db.execute("BEGIN IMMEDIATE")
         try:
+            if require_drained:
+                outstanding = self._db.execute(
+                    "SELECT 1 FROM outbox WHERE subject_id=? AND epoch_id=? "
+                    "AND delivery_state!='delivered' LIMIT 1",
+                    (self.subject_id, self.epoch_id),
+                ).fetchone()
+                if outstanding is not None:
+                    raise RuntimeError(
+                        "outstanding subject frame must be delivered or "
+                        "reconciled before another publish"
+                    )
             current = self._read_checkpoint_locked()
             organ = SyntheticIpseityOrgan.restore(current.to_dict())
             proposal = organ.preview(tick, batch)
