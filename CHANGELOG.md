@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.8 novelty audit and annotation readiness, 2026-10-11
+
+Added a critically sourced prior-art audit with candidate subject-access noninterference claim, overlap table, falsifiable hypotheses and explicit unproven limitations. Added deterministic balanced gold-free blinded reviewer packet, private post-annotation alignment, complete independent submission validation, raw inter-rater agreement and Cohen kappa reporting, and a procedural design for separate new-stem extract-then-compare study. Tests demonstrate missing/incomplete annotations cannot fabricate empirical outcomes. No new cognitive organ, old-score modification or claim of human annotations.
+
 ## 0.9.7 informal witness natural-language heldout, 2026-10-11
 
 Adds 24 fixed researcher-authored prose witness pairs balanced among same-report, contradictory-report and insufficient-comparison classes; witness-order counterbalancing, explicit independent-verification controls, separate parser abstention/coverage measurement, strict six-field-free categorical scoring, paired-case gated accuracy, authentic pinned Qwen2.5-3B GGUF CPU execution and archived provenance. First real 96-call Qwen3B pilot completed (58/96 raw correct, 86/96 strictly formatted); predefined gate FAILED because AGREE 1/8, DISAGREE 6/8, INSUFFICIENT 3/8, independent verifier 1/8 and no-verifier 16/16. The strict parser safely abstained on all 48 natural records, yielding 0% coverage. Full original raw data, model revision and SHA hashes at results/NATURAL_WITNESS_REAL_2026_10_11.md. Earlier character-organ code and historical model evidence remain unchanged. This is measurement validation, not a cognitive architecture change.
