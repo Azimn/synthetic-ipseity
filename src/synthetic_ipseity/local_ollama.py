@@ -51,6 +51,7 @@ class LocalOllamaRenderer:
         model: str,
         *,
         timeout: float = 120.0,
+        max_output_tokens: int = 64,
         transport: Callable[[bytes, float], bytes] | None = None,
     ) -> None:
         if (type(model) is not str or _NAME.fullmatch(model) is None
@@ -59,10 +60,13 @@ class LocalOllamaRenderer:
             raise ValueError("model must be a bounded Ollama model tag")
         if type(timeout) not in (int,float) or not 0 < timeout <= 900:
             raise ValueError("timeout must be between 0 and 900 seconds")
+        if type(max_output_tokens) is not int or not 1 <= max_output_tokens <= 512:
+            raise ValueError("max_output_tokens must be an integer from 1 to 512")
         if transport is not None and not callable(transport):
             raise TypeError("transport must be a trusted callable")
         self.model=model
         self.timeout=float(timeout)
+        self.max_output_tokens=max_output_tokens
         self._transport=transport if transport is not None else _local_post
 
     def __call__(self, admitted_text: str) -> str:
@@ -76,7 +80,7 @@ class LocalOllamaRenderer:
             "model":self.model,
             "prompt":admitted_text,
             "stream":False,
-            "options":{"temperature":0},
+            "options":{"temperature":0,"num_predict":self.max_output_tokens},
         },sort_keys=True,separators=(",",":"),ensure_ascii=False).encode("utf-8")
         reply=self._transport(body,self.timeout)
         if type(reply) is not bytes:
