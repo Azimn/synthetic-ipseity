@@ -238,6 +238,19 @@ class LaboratoryActionCycleTests(unittest.TestCase):
         self.assertFalse(self.gateway.drawer_open())
         self.assertEqual(self.gateway.action_count(),0)
 
+    def test_scripted_demo_runs_one_full_action_feedback_cycle(self):
+        from tools.laboratory_action_demo import run_demo
+        report=run_demo()
+        self.assertEqual(report["run_kind"],"scripted_offline_conformance")
+        self.assertEqual(report["action"],"open_drawer")
+        self.assertTrue(report["host_authorized"])
+        self.assertTrue(report["laboratory_drawer_open"])
+        self.assertEqual(report["actions_journaled"],1)
+        self.assertEqual(report["source_events_processed"],5)
+        self.assertEqual(report["subject_only_frames_delivered"],2)
+        self.assertEqual(report["model_response_to_feedback"],
+                         "I should look inside the open drawer.")
+
     def test_only_allowlisted_effects_and_small_surface(self):
         self.assertEqual(ALLOWED_ACTIONS,{
             "inspect_lamp","open_drawer","inspect_drawer",
