@@ -12,6 +12,18 @@ The governing rule is expanded in **[The First-Person Experiential Boundary](doc
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
 
+## Local Ollama renderer: first real-model integration path (v0.9.10)
+
+A new **optional local-only Ollama adapter** accepts exactly one already admitted, first-person subject frame from the existing durable renderer port. The HTTP request contains no raw tool records, private simulation values, source IDs, hidden cognitive scores or engineer audit. Only the first-person subject text is the model's prompt. The inference endpoint is fixed to loopback, proxies and redirects are disabled, and model output is never automatically credited as lived memory or world truth.
+
+With Ollama running and the model installed locally, run:
+
+    python tools/ollama_subject_demo.py --model qwen3:1.5b
+
+The demo commits a fictional laboratory observation, reopens the SQLite host and invokes the real local inference adapter on the *admitted experience only*. Offline tests use an injected fake transport and verify the precise outgoing payload, restart, model swap and failed-call recovery. This is a practical adapter, not yet a completed real-LLM scientific experiment.
+
+[Local renderer contract and safety limitations](docs/LOCAL_OLLAMA_RENDERER_V0_9_10.md) · [Ollama adapter](src/synthetic_ipseity/local_ollama.py) · [demo](tools/ollama_subject_demo.py).
+
 ## First-person boundary end-to-end engineering gate (v0.9.9)
 
 To finish the **existing** cognitive organ rather than invent another architecture, the reference host now has a runnable differential conformance test: create durable subject-only experiences, change hidden host world state and engineer data, restart SQLite, and compare **the exact first-person text** delivered to the renderer across simulated model-family swaps. It also confirms that genuinely observed numbers and source-attributed speech remain visible, while unacquired or unattested secrets, debug references, hidden fatigue and silent ticks do not cross the boundary. This is a real reference-host execution with a deterministic fake renderer, not real-model cognitive proof or a whole-platform security audit. The **first completed run passed 32/32 differential host-state variants** with 2 renderer callbacks per trial and **306 passing unit tests** on all 3 Python versions; [see permanent conformance findings](results/FPEB_REFERENCE_CONFORMANCE_2026_10_11.md).

@@ -32,6 +32,7 @@ from .durable_host import (
 )
 
 from .renderer_port import RenderDelivery, SubjectOnlyRendererPort
+from .local_ollama import LocalOllamaRenderer
 from .epistemics import (
     EpistemicBatch, EpistemicClaim, EpistemicReceipt,
     EpistemicSourceMonitor, EvidenceKind, Stance,
@@ -69,6 +70,7 @@ __all__ = [
     "EpistemicSourceMonitor",
     "EvidenceKind",
     "Stance",
+    "LocalOllamaRenderer",
     "RenderDelivery",
     "SubjectOnlyRendererPort",
     "CommitReceipt",
