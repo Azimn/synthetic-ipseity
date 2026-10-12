@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.11 authorized laboratory action cycle, 2026-10-12
+
+Added a strict three-action SQLite reference laboratory, one-string subject-only model ingress, exact JSON proposal parsing, host authorization and execution, durable effect journal keyed to subject/epoch/outbox, retry without duplicate execution, host-grounded feedback via new attested world/perception records, and crash recovery for feedback already committed to the first-person outbox. New offline scripted and optional local-Ollama demo. The first scripted SQLite real-host demo passed, with a durably authorized drawer opening and host-grounded second first-person frame; all 328 tests passed in Python 3.11/3.12/3.13 CI. See results/AUTHORIZED_LABORATORY_CYCLE_2026_10_12.md. No new organ, no automatic generated autobiographical memory and no claim of real-model or general-world behavioral efficacy.
+
+
 ## 0.9.10 local-only model renderer, 2026-10-11
 
 Added a stateless LocalOllamaRenderer with fixed 127.0.0.1 inference endpoint, disabled proxies and redirects, bounded first-person prompt and response, model-tag validation, no credential or paid API requirement, and isolated failure propagation that leaves the durable outbox unacknowledged. The outgoing inference request contains only already admitted subject text plus minimal model settings; raw host/engineer data is absent. Added a runnable temporary laboratory subject/demo and transport-stub regression tests. No real local inference is claimed to have executed in GitHub CI, no generated output is automatically stored as authentic memory, and no new cognitive architecture was introduced.

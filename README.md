@@ -12,6 +12,22 @@ The governing rule is expanded in **[The First-Person Experiential Boundary](doc
 
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
 
+## Authorized perceive–act–experience laboratory cycle (v0.9.11)
+
+The existing Synthetic Ipseity organ now has a **closed, authorized action loop** in a tiny SQLite laboratory: receive a legitimately admitted first-person observation, let a renderer propose a JSON action, execute ONLY a host-allowlisted effect, then admit the actual resulting world observation back as first-person experience. Model output does not become reality or personal memory on its own.
+
+The host persists the effect BEFORE acknowledging the original subject frame; a replay after a crash uses the stored outbox-ID receipt instead of generating or executing the action again. It also safely recovers when the host-feedback observation was committed but its publish marker was not. Tests cover denied commands, wrong-subject data, crash/restart, reconstructed experience and two-turn open-then-inspect.
+
+**Offline deterministic demonstration:**
+
+    python tools/laboratory_action_demo.py --scripted
+
+**Optional local Ollama:**
+
+    python tools/laboratory_action_demo.py --model qwen3:1.5b
+
+The model must already be locally installed. It may fail to emit a valid action, in which case the host safely refuses. [Design, failure semantics and limitations](docs/AUTHORIZED_LABORATORY_ACTION_V0_9_11.md). The first reproducible scripted run passed all **328 tests on Python 3.11, 3.12 and 3.13**, with an actual authorized drawer-open effect and subsequent first-person feedback. [Read the dated result and scope](results/AUTHORIZED_LABORATORY_CYCLE_2026_10_12.md).
+
 ## Local Ollama renderer: first real-model integration path (v0.9.10)
 
 A new **optional local-only Ollama adapter** accepts exactly one already admitted, first-person subject frame from the existing durable renderer port. The HTTP request contains no raw tool records, private simulation values, source IDs, hidden cognitive scores or engineer audit. Only the first-person subject text is the model's prompt. The inference endpoint is fixed to loopback, proxies and redirects are disabled, and model output is never automatically credited as lived memory or world truth.
