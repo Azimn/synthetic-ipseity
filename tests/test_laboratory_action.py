@@ -83,7 +83,7 @@ class LaboratoryActionCycleTests(unittest.TestCase):
         self.assertNotIn("ENGINEER_SECRET",prompt)
         self.assertNotIn("private-record",prompt)
         self.assertNotIn('"drawer_open":',prompt)
-        self.assertIsNone(self.host.pending_count() or None)
+        self.assertEqual(self.host.pending_count(),0)
         posted=self.gateway.publish_next_feedback(self.host)
         self.assertEqual(receipt,posted)
         self.assertIsNone(self.gateway.feedback_receipt())
@@ -225,14 +225,13 @@ class LaboratoryActionCycleTests(unittest.TestCase):
         self.assertEqual(self.gateway.action_count(),1)
 
     def test_cross_subject_gateway_and_lease_refused(self):
-        wrong=LabActionReceipt(-1,"open_drawer",True,"I own your lab")
         with self.assertRaises(ValueError):
             AuthorizedLaboratoryTurn(
                 self.host,
                 LaboratoryActionGateway(self.path,subject_id=SUBJECT,epoch_id="other"),
                 ScriptedRenderer('{"action":"open_drawer"}')
             )
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.gateway.receipt_before_model(
                 type("FakeLease",(),{"outbox_id":1,"token":"fake"})()
             )
