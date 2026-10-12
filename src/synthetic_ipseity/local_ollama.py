@@ -53,7 +53,9 @@ class LocalOllamaRenderer:
         timeout: float = 120.0,
         transport: Callable[[bytes, float], bytes] | None = None,
     ) -> None:
-        if type(model) is not str or _NAME.fullmatch(model) is None:
+        if (type(model) is not str or _NAME.fullmatch(model) is None
+                or model.startswith((".", "/", "-")) or ".." in model
+                or "://" in model):
             raise ValueError("model must be a bounded Ollama model tag")
         if type(timeout) not in (int,float) or not 0 < timeout <= 900:
             raise ValueError("timeout must be between 0 and 900 seconds")
