@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.9 first-person reference-host conformance, 2026-10-11
+
+Added actual three-tick SQLite durable-host-to-renderer integration and differential noninterference test with 32 private host-state variants, fake renderer family swap, permitted numeric observation, reported heard testimony, reconstructed vs lived memory, unacquired tool data, unattested hostile instructions, hidden body-state variation, extra hidden event cursor, process restart, empty inner-monologue control and renderer failure/retry. Tested only the trusted reference integration; whole-host security and behavioral efficacy are explicitly unproven. Observed first three-version CI: 306 unit tests plus 32/32 differential hidden-state variants passed per Python version, with an actual durable SQLite host and fake renderer callbacks. See results/FPEB_REFERENCE_CONFORMANCE_2026_10_11.md. No new cognitive organ or modification of previous negative data.
+
+
 ## 0.9.8 novelty audit and annotation readiness, 2026-10-11
 
 Added a critically sourced prior-art audit with candidate subject-access noninterference claim, overlap table, falsifiable hypotheses and explicit unproven limitations. Added deterministic balanced gold-free blinded reviewer packet, private post-annotation alignment, complete independent submission validation, raw inter-rater agreement and Cohen kappa reporting, and a procedural design for separate new-stem extract-then-compare study. Tests demonstrate missing/incomplete annotations cannot fabricate empirical outcomes. No new cognitive organ, old-score modification or claim of human annotations.
