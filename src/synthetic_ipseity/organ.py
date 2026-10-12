@@ -71,6 +71,9 @@ _ALLOWED: Mapping[Kind, frozenset[Channel]] = {
     Kind.PALINODE_SHIFT: frozenset({Channel.COGNITION}),
     Kind.PALINODE_DOUBT: frozenset({Channel.COGNITION}),
     Kind.PALINODE_RECALL: frozenset({Channel.MEMORY}),
+    # A trusted cognizer has already projected this event into the subject
+    # workspace; this is NOT permission to pass arbitrary raw world text.
+    Kind.PROJECTED_SUBJECT_EVENT: frozenset({Channel.COGNITION}),
 }
 
 
