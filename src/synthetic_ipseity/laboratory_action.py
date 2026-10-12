@@ -243,9 +243,11 @@ class LaboratoryActionGateway:
         """Feedback is host-authored after actual effect, never model-authored."""
         return Observation(
             sequence=seq,tick=tick,epoch_id=self.epoch_id,
-            channel=Channel.TOOL,
+            channel=(Channel.WORLD if receipt.accepted else Channel.TOOL),
             signal=SourceSignal(
-                self.subject_id,Kind.TOOL_TEXT,receipt.feedback,
+                self.subject_id,
+                (Kind.WORLD_OBJECT if receipt.accepted else Kind.TOOL_TEXT),
+                receipt.feedback,
                 source_ref=f"host-action-receipt:{receipt.outbox_id}",
                 acquired=True,salience=0.99,
             ),
