@@ -46,6 +46,7 @@ class Kind(str, Enum):
     PALINODE_SHIFT = "palinode_shift"
     PALINODE_DOUBT = "palinode_doubt"
     PALINODE_RECALL = "palinode_recall"
+    PROJECTED_SUBJECT_EVENT = "projected_subject_event"
 
 
 class MemoryClass(str, Enum):
@@ -67,6 +68,7 @@ _TEXTUAL = frozenset({
     Kind.EVIDENCE_CONFLICT, Kind.EVIDENCE_RETRACTION,
     Kind.EVIDENCE_RESOLUTION, Kind.EVIDENCE_REVISION,
     Kind.PALINODE_SHIFT, Kind.PALINODE_DOUBT, Kind.PALINODE_RECALL,
+    Kind.PROJECTED_SUBJECT_EVENT,
 })
 _ISSUER = object()
 
@@ -175,6 +177,11 @@ def _quoted(raw: str) -> str:
 
 
 def _experience(signal: SourceSignal) -> str:
+    if signal.kind is Kind.PROJECTED_SUBJECT_EVENT:
+        # Only trusted adapters may use this kind. The source text has already
+        # passed a subject-native projector; rewriting it here would alter
+        # epistemic attribution (for example, lived versus reconstructed).
+        return str(signal.value)
     if signal.kind is Kind.COLD:
         level = float(signal.value)
         if level < 0.15:

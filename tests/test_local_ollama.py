@@ -43,7 +43,7 @@ class LocalOllamaTests(unittest.TestCase):
         self.assertEqual(body,{
             "model":"qwen3:1.5b",
             "prompt":"I can read a dial: six degrees.",
-            "stream":False,"options":{"temperature":0},
+            "stream":False,"options":{"temperature":0,"num_predict":64},
         })
         self.assertEqual(timeout,120)
         self.assertNotIn("messages",body)
@@ -136,6 +136,16 @@ class LocalOllamaTests(unittest.TestCase):
                 LocalOllamaRenderer("qwen3:1.5b",timeout=timeout)
         with self.assertRaises(TypeError):
             LocalOllamaRenderer("qwen3:1.5b",transport="untrusted")
+        for budget in (0, -1, 513, True, "64", 4.2, None):
+            with self.subTest(budget=budget),self.assertRaises(ValueError):
+                LocalOllamaRenderer("qwen3:1.5b",max_output_tokens=budget)
+        short=FakeTransport()
+        LocalOllamaRenderer("qwen3:1.5b",max_output_tokens=17,transport=short)(
+            "I wonder how much time remains."
+        )
+        self.assertEqual(short.requests[0][0]["options"],{
+            "temperature":0,"num_predict":17,
+        })
         renderer=LocalOllamaRenderer("qwen3:1.5b",transport=FakeTransport())
         for text in ("", "\n",None,123,"a"*32001):
             with self.subTest(text=type(text)),self.assertRaises((TypeError,ValueError)):
