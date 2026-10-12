@@ -58,3 +58,19 @@ It does not provide exactly-once inference or atomic coordination with the
 character's separate brain database. A crashed renderer may still repeat
 delivery when its lease expires. Dedicated tests cover same-process and
 competing-process denial, restart, rollback, and legacy behavior.
+
+## Local CPU renderer inference budget
+
+The real two-turn Pretorius Ollama probe first produced 1,777 characters on
+the initial call but then timed out on the second, under the old unbounded
+generation configuration. The causal issue was a missing request
+`num_predict` limit, not a failed Synthetic Ipseity admission or a raw-state
+leak. `LocalOllamaRenderer` now defaults to at most 64 generated tokens per
+call, with an explicit constructor bound of 1 through 512 tokens. The
+`num_predict` option is a fixed model-generation limit, not an input
+context source. The host still chooses when rendering may run; no raw memory
+or audit is passed to the model.
+
+Model-side adherence and throughput are separately measured in the
+unmocked Ollama workflow. These constraints reduce CPU stalls and do
+not validate psychological quality, autonomous reasoning or safety.
