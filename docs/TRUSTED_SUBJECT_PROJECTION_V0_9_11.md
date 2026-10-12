@@ -43,3 +43,18 @@ raw trusted source observations not yet projected into subject language. This
 new kind is solely for already projected, authorized subject frames.
 
 See The-Doctor-Lives production integration gate for a concrete caller.
+
+## Optional transactional backpressure
+
+`DurableIpseityHost.process(..., require_drained=True)` is a nonbreaking
+versioned-host option. When enabled, the host checks for any pending **or
+leased** frame in the same `BEGIN IMMEDIATE` transaction as cursor advancement.
+It rejects a second publish without mutating the checkpoint or outbox. This
+prevents a character session from generating unbounded duplicate prompts while
+older first-person experience awaits model delivery.
+
+The historical default remains `require_drained=False` for compatibility.
+It does not provide exactly-once inference or atomic coordination with the
+character's separate brain database. A crashed renderer may still repeat
+delivery when its lease expires. Dedicated tests cover same-process and
+competing-process denial, restart, rollback, and legacy behavior.
