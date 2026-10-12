@@ -33,6 +33,10 @@ from .durable_host import (
 
 from .renderer_port import RenderDelivery, SubjectOnlyRendererPort
 from .local_ollama import LocalOllamaRenderer
+from .laboratory_action import (
+    ALLOWED_ACTIONS, AuthorizedLaboratoryTurn, LabActionReceipt,
+    LaboratoryActionGateway,
+)
 from .epistemics import (
     EpistemicBatch, EpistemicClaim, EpistemicReceipt,
     EpistemicSourceMonitor, EvidenceKind, Stance,
@@ -70,6 +74,10 @@ __all__ = [
     "EpistemicSourceMonitor",
     "EvidenceKind",
     "Stance",
+    "ALLOWED_ACTIONS",
+    "AuthorizedLaboratoryTurn",
+    "LabActionReceipt",
+    "LaboratoryActionGateway",
     "LocalOllamaRenderer",
     "RenderDelivery",
     "SubjectOnlyRendererPort",
