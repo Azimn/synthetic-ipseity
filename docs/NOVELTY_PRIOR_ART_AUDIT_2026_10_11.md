@@ -5,6 +5,8 @@
 **Scope:** [Synthetic Ipseity](../docs/RESEARCH_CONTRACT.md) implementation through v0.9.7, not all adjacent Azimn cognitive repositories.
 **Research objective:** identify an academically defensible contribution and stop claiming originality for known mechanisms.
 
+The specific first-person/no-direct-host-data rationale and proposed empirical invariants are documented separately in [The First-Person Experiential Boundary](FIRST_PERSON_EXPERIENTIAL_BOUNDARY.md). That design note sharpens the *candidate* contribution, but does not convert this provisional prior-art assessment into a priority claim.
+
 ## Executive verdict
 
 The current package is a competent **engineering prototype of provenance-constrained, subject-scoped experience admission**, not yet a validated advance in character cognition. Source monitoring, reflection, narrative memory, epistemic state revision, durable event handling and data/control isolation are all established *ideas*. A potentially distinctive **system-level contribution** is an experimentally testable **Subject-Access Noninterference Contract (SANC)**:
