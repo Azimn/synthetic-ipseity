@@ -26,7 +26,7 @@ The host persists the effect BEFORE acknowledging the original subject frame; a 
 
     python tools/laboratory_action_demo.py --model qwen3:1.5b
 
-The model must already be locally installed. It may fail to emit a valid action, in which case the host safely refuses. [Design, failure semantics and limitations](docs/AUTHORIZED_LABORATORY_ACTION_V0_9_11.md).
+The model must already be locally installed. It may fail to emit a valid action, in which case the host safely refuses. [Design, failure semantics and limitations](docs/AUTHORIZED_LABORATORY_ACTION_V0_9_11.md). The first reproducible scripted run passed all **328 tests on Python 3.11, 3.12 and 3.13**, with an actual authorized drawer-open effect and subsequent first-person feedback. [Read the dated result and scope](results/AUTHORIZED_LABORATORY_CYCLE_2026_10_12.md).
 
 ## Local Ollama renderer: first real-model integration path (v0.9.10)
 
