@@ -35,6 +35,7 @@ jobs:
       - run: python -m unittest discover -s tests -p 'test_annotation_audit.py' -v
       - run: python tools/annotation_audit.py generate --outdir /tmp/ipseity-review-packet
       - run: python tools/fpeb_integration_gate.py --cases 32 --out /tmp/ipseity-fpeb-reference.json
+      - run: python tools/laboratory_action_demo.py --scripted
       - run: python tools/continuity_benchmark.py prepare --out /tmp/ipseity-pilot-manifest.json
       - run: python tools/continuity_benchmark.py simulate --manifest /tmp/ipseity-pilot-manifest.json --out /tmp/ipseity-pilot-fixtures.jsonl
       - run: python tools/continuity_benchmark.py evaluate --manifest /tmp/ipseity-pilot-manifest.json --responses /tmp/ipseity-pilot-fixtures.jsonl --out /tmp/ipseity-pilot-calibration.json
