@@ -67,7 +67,7 @@ def _write_csv(path: Path, fields: tuple[str, ...], rows: list[dict]) -> None:
 def generate(outdir: Path) -> dict:
     outdir.mkdir(parents=True, exist_ok=True)
     packet = reviewer_packet()
-    if len(packet) != 24 or len({_id for _id in (r["blind_id"] for r in packet)}) != 24:
+    if len(packet) != 24 or len({row["blind_id"] for row in packet}) != 24:
         raise RuntimeError("corrupted blinded packet")
     _write_csv(outdir / "reviewer_packet.csv", PACKET_FIELDS, packet)
     template = [
