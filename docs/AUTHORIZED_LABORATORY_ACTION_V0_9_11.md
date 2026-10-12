@@ -69,3 +69,7 @@ This is concrete engineering completion of the **perceive -> propose -> authoriz
 It does NOT validate subjective consciousness, general semantic understanding, character identity or superior behavior over prompt-only controls. It is not a universal no-bypass proof. Those questions remain explicitly open under the v1.0 and publication milestone issues.
 
 Next: actual local Ollama execution with raw preserved prompts and receipts, a full consumer host ingress audit, and independently evaluated continuity under renderer swaps. Do not introduce another cognitive organ.
+
+## First completed engineering result
+
+GitHub Actions [#38208476124](https://github.com/Azimn/synthetic-ipseity/actions/runs/38208476124) passed **328 software tests per Python version** across 3.11, 3.12 and 3.13, plus the reproducible scripted real SQLite laboratory run. The host authorized and durably journaled precisely one drawer opening, then admitted and delivered its resulting observation as a second first-person text frame. These findings are archived at [results/AUTHORIZED_LABORATORY_CYCLE_2026_10_12.md](../results/AUTHORIZED_LABORATORY_CYCLE_2026_10_12.md). A real Ollama inference result remains uncollected.
