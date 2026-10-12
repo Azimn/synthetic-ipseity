@@ -149,6 +149,26 @@ class LocalOllamaTests(unittest.TestCase):
                 with self.assertRaises((ValueError,TypeError)):
                     renderer("I notice a ticking clock.")
 
+    def test_optional_demo_has_no_persistent_private_data_and_uses_real_port(self):
+        from tools.ollama_subject_demo import demo, example_observations
+        events=example_observations()
+        self.assertEqual(len(events),4)
+        self.assertFalse(events[0].signal.acquired)
+        self.assertFalse(events[0].attested)
+        self.assertEqual(events[-1].signal.memory_class.value,"reconstructed")
+        collected=FakeTransport(response="I wonder who told me that.")
+        with patch("tools.ollama_subject_demo.LocalOllamaRenderer",
+                   return_value=LocalOllamaRenderer("qwen3:1.5b",transport=collected)):
+            text=demo("qwen3:1.5b")
+        self.assertEqual(text,"I wonder who told me that.")
+        self.assertEqual(len(collected.requests),1)
+        visible=collected.requests[0][0]["prompt"]
+        self.assertIn("8 degrees",visible)
+        self.assertIn("Henry says",visible)
+        self.assertIn("do not remember living it",visible)
+        self.assertNotIn("ENGINEER_SECRET_NEVER_SHOW",visible)
+        self.assertNotIn("private-engineer-row",visible)
+
     def test_endpoint_is_exactly_loopback_and_never_user_supplied(self):
         self.assertEqual(LOCAL_ENDPOINT,"http://127.0.0.1:11434/api/generate")
         class FakeRedirect:
