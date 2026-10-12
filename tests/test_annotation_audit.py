@@ -133,7 +133,7 @@ class ReviewPacketTests(unittest.TestCase):
         self.assertEqual(_kappa(["AGREE"]*4,["AGREE"]*4,RELATION),1.0)
         self.assertLess(_kappa(["AGREE","DISAGREE"]*2,
                                ["DISAGREE","AGREE"]*2,RELATION),0)
-        self.assertIsNone(_kappa(["AGREE"]*4,["DISAGREE"]*4,RELATION))
+        self.assertEqual(_kappa(["AGREE"]*4,["DISAGREE"]*4,RELATION),0.0)
         self.assertIn("UNCLEAR",VERIFICATION)
 
 if __name__=="__main__":
