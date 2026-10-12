@@ -2,7 +2,7 @@
 
 ## 0.9.11 authorized laboratory action cycle, 2026-10-12
 
-Added a strict three-action SQLite reference laboratory, one-string subject-only model ingress, exact JSON proposal parsing, host authorization and execution, durable effect journal keyed to subject/epoch/outbox, retry without duplicate execution, host-grounded feedback via new attested world/perception records, and crash recovery for feedback already committed to the first-person outbox. New offline scripted and optional local-Ollama demo. No new organ, no automatic generated autobiographical memory and no claim of real-model or general-world behavioral efficacy.
+Added a strict three-action SQLite reference laboratory, one-string subject-only model ingress, exact JSON proposal parsing, host authorization and execution, durable effect journal keyed to subject/epoch/outbox, retry without duplicate execution, host-grounded feedback via new attested world/perception records, and crash recovery for feedback already committed to the first-person outbox. New offline scripted and optional local-Ollama demo. The first scripted SQLite real-host demo passed, with a durably authorized drawer opening and host-grounded second first-person frame; all 328 tests passed in Python 3.11/3.12/3.13 CI. See results/AUTHORIZED_LABORATORY_CYCLE_2026_10_12.md. No new organ, no automatic generated autobiographical memory and no claim of real-model or general-world behavioral efficacy.
 
 
 ## 0.9.10 local-only model renderer, 2026-10-11
