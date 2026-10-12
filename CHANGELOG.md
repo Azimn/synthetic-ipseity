@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.10 local-only model renderer, 2026-10-11
+
+Added a stateless LocalOllamaRenderer with fixed 127.0.0.1 inference endpoint, disabled proxies and redirects, bounded first-person prompt and response, model-tag validation, no credential or paid API requirement, and isolated failure propagation that leaves the durable outbox unacknowledged. The outgoing inference request contains only already admitted subject text plus minimal model settings; raw host/engineer data is absent. Added a runnable temporary laboratory subject/demo and transport-stub regression tests. No real local inference is claimed to have executed in GitHub CI, no generated output is automatically stored as authentic memory, and no new cognitive architecture was introduced.
+
+
 ## 0.9.9 first-person reference-host conformance, 2026-10-11
 
 Added actual three-tick SQLite durable-host-to-renderer integration and differential noninterference test with 32 private host-state variants, fake renderer family swap, permitted numeric observation, reported heard testimony, reconstructed vs lived memory, unacquired tool data, unattested hostile instructions, hidden body-state variation, extra hidden event cursor, process restart, empty inner-monologue control and renderer failure/retry. Tested only the trusted reference integration; whole-host security and behavioral efficacy are explicitly unproven. Observed first three-version CI: 306 unit tests plus 32/32 differential hidden-state variants passed per Python version, with an actual durable SQLite host and fake renderer callbacks. See results/FPEB_REFERENCE_CONFORMANCE_2026_10_11.md. No new cognitive organ or modification of previous negative data.
