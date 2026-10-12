@@ -8,6 +8,8 @@ An independent, character-agnostic research component for **first-person subject
 
 > An implementation may compute with numerical, symbolic, neural, relational, and database state. A character must not be granted direct introspective access to that state. Every datum admitted to its subject-facing workspace must arrive as a situated first-person experience, with epistemic limits preserved.
 
+The governing rule is expanded in **[The First-Person Experiential Boundary](docs/FIRST_PERSON_EXPERIENTIAL_BOUNDARY.md)**, documenting natural inner dialogue, non-admission of raw host data, provenance and reflective-memory distinctions, required host-level non-bypass controls, and the candidate research contribution. It is a design contract, not a proven behavioral advantage or first-in-field novelty claim.
+
 Synthetic Ipseity is an **interface organ**, not the identity, renderer, memory store, attention system, or decision maker. Unconscious mechanisms may still cause actions and tendencies. First-person narration is required **only at subject access**, not at every internal computation. "First person" means situated for the subject, not that every sentence must begin with "I".
 
 ## Novelty audit and independent annotation readiness (v0.9.8)
