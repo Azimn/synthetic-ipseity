@@ -1,0 +1,35 @@
+name: blinded-source-review-packet
+
+# Prepare annotation materials; NEVER upload original author gold alignment.
+# No model calls, annotations or external reviewer actions occur.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/annotation-review-packet.yml"
+      - "tools/annotation_audit.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-materials:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: python tools/annotation_audit.py generate --outdir blinded-review-materials
+      - name: Archive ONLY blank blinded files (never gold-alignment)
+        uses: actions/upload-artifact@v4
+        with:
+          name: blinded-source-review-${{ github.run_id }}
+          path: |
+            blinded-review-materials/reviewer_packet.csv
+            blinded-review-materials/reviewer_1_blank.csv
+            blinded-review-materials/reviewer_2_blank.csv
+            blinded-review-materials/annotation_manifest.json
+          retention-days: 30
+          if-no-files-found: error
