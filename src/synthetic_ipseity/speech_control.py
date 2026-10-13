@@ -65,6 +65,7 @@ class GovernedSpeechControl:
         generate: Callable[[str, str], str],
         fallback_text: str | None = None,
         max_model_attempts: int = 2,
+        require_direct_first_person: bool = True,
     ):
         if not isinstance(bindings, ReferenceBindings):
             raise TypeError("Identity must come from explicit host ReferenceBindings")
@@ -87,7 +88,10 @@ class GovernedSpeechControl:
         self._gov = SelfReferenceGovernor()
         self._generate = generate
         self._instruction = trusted_instruction
+        if type(require_direct_first_person) is not bool:
+            raise TypeError("Strict first-person mode requires a host boolean")
         self._max_calls = max_model_attempts
+        self._strict = require_direct_first_person
         self._fallback = fallback_text
         self.receipts: list[SpeechControlReceipt] = []
         self.last_score: ReferenceScore | None = None
@@ -131,6 +135,10 @@ class GovernedSpeechControl:
                 score = self._gov.check(candidate, self.bindings, self.context)
                 accepted = score.accepted
                 violations = score.violation_rule_ids
+                if (accepted and self._strict and self.context.discourse_mode == "direct"
+                        and not _first_person_anchor(candidate)):
+                    accepted = False
+                    violations = (*violations, "SRG-SPEAKER-STANCE-UNVERIFIED")
                 digest = sha256(candidate.encode("utf8")).hexdigest()
             attempts.append(SpeechControlAttempt(
                 "initial" if index == 0 else "repair",
@@ -176,4 +184,6 @@ class GovernedSpeechControl:
 def _first_person_anchor(text: str) -> bool:
     """Conservative requirement for *trusted fallbacks*, not all model speech."""
     import re
-    return bool(re.search(r"\b(?:I|me|my|mine|myself)\b", text, re.I))
+    from .self_reference import _model_owned_text
+    return bool(re.search(r"\b(?:I|me|my|mine|myself)\b",
+                          _model_owned_text(text), re.I))
