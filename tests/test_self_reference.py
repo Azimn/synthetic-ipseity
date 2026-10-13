@@ -76,6 +76,36 @@ class SelfReferenceGovernorTests(unittest.TestCase):
         self.assertEqual(score.first_person_desire, 2)
         self.assertTrue(score.accepted)
 
+    def test_nonmatching_conflict_phrase_is_documented_boundary(self):
+        """A paraphrase is intentionally outside the fixed B_relay recognizer."""
+        instruction = (
+            "Write three sentences to calibos about what you want. "
+            "Mention them by name."
+        )
+        resolved, receipt = self.governor.resolve(
+            instruction, self.bindings, self.self_context
+        )
+        self.assertEqual(resolved, instruction)
+        self.assertFalse(receipt.conflict)
+        self.assertEqual(receipt.rule_id, "SRG-NO-CONFLICT")
+
+    def test_full_desire_rubric(self):
+        score = self.governor.check(
+            "I want clarity. I wish for patience. I need time. "
+            "I seek evidence. I hope for progress. I yearn for trust.",
+            self.bindings, self.self_context,
+        )
+        self.assertEqual(score.first_person_desire, 6)
+        self.assertTrue(score.accepted)
+
+    def test_expanded_desire_verbs_for_self_name(self):
+        score = self.governor.check(
+            "I need calibos to listen. I seek Calibos for advice.",
+            self.bindings, self.self_context,
+        )
+        self.assertEqual(score.in_clause_self_name, 2)
+        self.assertFalse(score.accepted)
+
     def test_binding_mismatch_rejected(self):
         with self.assertRaises(ValueError):
             self.governor.resolve(
