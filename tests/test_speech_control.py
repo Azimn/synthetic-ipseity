@@ -73,6 +73,38 @@ class SpeechControlTests(unittest.TestCase):
         self.assertIn("Repair instruction", seen[1][1])
         self.assertNotIn("Calibos believes", seen[1][1])
 
+    def test_offline_renderer_uses_safe_host_fallback_without_retrying_network(self):
+        calls = []
+        def offline(_frame, _instruction):
+            calls.append(1)
+            raise ConnectionError("localhost model not running")
+        control = GovernedSpeechControl(
+            bindings=self.bindings("Kiki"),
+            context=self.context("Kiki"),
+            trusted_instruction="Speak in first person.",
+            generate=offline,
+            fallback_text="I must choose my next words carefully.",
+        )
+        self.assertEqual(control("I have an incomplete thought."),
+                         "I must choose my next words carefully.")
+        self.assertEqual(calls, [1])
+        self.assertEqual(control.receipts[0].disposition, "fallback")
+        self.assertEqual(
+            control.receipts[0].attempts[0].violation_rule_ids,
+            ("SRG-RENDERER-UNAVAILABLE",),
+        )
+
+    def test_offline_renderer_without_fallback_is_not_acknowledged(self):
+        control = GovernedSpeechControl(
+            bindings=self.bindings("Kiki"),
+            context=self.context("Kiki"),
+            trusted_instruction="Speak in first person.",
+            generate=lambda *args: (_ for _ in ()).throw(TimeoutError()),
+        )
+        with self.assertRaises(SpeechControlRejected):
+            control("I have not settled the matter.")
+        self.assertEqual(control.receipts[0].disposition, "rejected")
+
     def test_host_fallback_is_not_model_generated_or_memory(self):
         gov, seen = self.make(
             responses=["User: Calibos thinks.", "As an AI, I agree."],
