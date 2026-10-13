@@ -149,6 +149,17 @@ def _third_person_self_count(
             hits += 1
         else:
             anchored = False
+    # Explicit self-name possessives can expose role dislocation even when
+    # the model begins with "I": "I want Pretorius' perspective."
+    # Keep this bounded to self-referential psychological/narrative heads.
+    # A quotation or host-licensed rhetorical use is exempt.
+    possessive = re.compile(
+        rf"(?<![A-Za-z0-9])(?:{names})(?:'s|')\s+"
+        rf"(?:perspective|story|view|motives|intentions|thoughts|"
+        rf"feelings|memories|experience)\b",
+        re.IGNORECASE,
+    )
+    hits += len(possessive.findall(_model_owned_text(response)))
     return hits
 
 
