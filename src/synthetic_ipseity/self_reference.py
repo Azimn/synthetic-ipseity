@@ -53,6 +53,7 @@ class ReferenceScore:
     accepted: bool
     third_person_self: int = 0
     boundary_marker: int = 0
+    violation_rule_ids: tuple[str, ...] = ()
 
 
 def _digest(text: str) -> str:
@@ -195,6 +196,15 @@ class SelfReferenceGovernor:
         unlicensed = 0 if context.rhetorical_self_address else vocative
         third = _third_person_self_count(response, bindings, context)
         boundary = _boundary_marker_count(response)
+        violations = []
+        if in_clause:
+            violations.append("SRG-OUTPUT-SELF-NAME-IN-DESIRE")
+        if unlicensed:
+            violations.append("SRG-OUTPUT-SELF-VOCATIVE")
+        if third:
+            violations.append("SRG-OUTPUT-THIRD-PERSON-SELF")
+        if boundary:
+            violations.append("SRG-OUTPUT-BOUNDARY-MARKER")
         return ReferenceScore(
             first_person_desire=fp,
             in_clause_self_name=in_clause,
@@ -203,4 +213,5 @@ class SelfReferenceGovernor:
             accepted=(in_clause == 0 and unlicensed == 0 and third == 0 and boundary == 0),
             third_person_self=third,
             boundary_marker=boundary,
+            violation_rule_ids=tuple(violations),
         )
