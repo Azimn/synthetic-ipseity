@@ -185,7 +185,6 @@ class SelfReferenceGovernorTests(unittest.TestCase):
         for response in (
             "I want to understand Pretorius' perspective on the homunculi.",
             "I want to know what comes next in Pretorius' story.",
-            "I wonder what Kiki's perspective is." if False else
             "I am thinking about Doctor Septimus Pretorius' memories.",
         ):
             with self.subTest(response=response):
