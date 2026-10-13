@@ -51,6 +51,8 @@ class ReferenceScore:
     vocative_self: int
     unlicensed_vocative_self: int
     accepted: bool
+    third_person_self: int = 0
+    boundary_marker: int = 0
 
 
 def _digest(text: str) -> str:
@@ -59,6 +61,81 @@ def _digest(text: str) -> str:
 
 def _name_pattern(bindings: ReferenceBindings) -> str:
     return "|".join(re.escape(n) for n in sorted(bindings.self_names, key=len, reverse=True))
+
+
+
+# Conservative fixed English output fixtures, not universal semantic parsing.
+# Quoted text is never model-owned speech; nested/malformed quotation is
+# outside this deliberately bounded detector's coverage.
+_QUOTED_SPANS = re.compile(r'“[^”]*”|"[^"\n]*"')
+_REPORTING_LEAD = re.compile(
+    r"^(?:the report says|the text says|the witness said|"
+    r"according to the report|i quote|the document states)\b",
+    re.IGNORECASE,
+)
+_THIRD_VERBS = (
+    r"is|was|has|had|believes|believed|thinks|thought|"
+    r"wants|wanted|needs|needed|says|said|seems|appears|"
+    r"feels|felt|knows|knew|considers|considered|"
+    r"remembers|remembered|understands|understood|"
+    r"should|would|will|might|must"
+)
+_META_BOUNDARY = re.compile(
+    r"(?:^|\n)\s*(?:user|assistant|system)\s*:"
+    r"|\b(?:the (?:frame|prompt|instruction|system message)\s+"
+    r"(?:states|says|instructs|asks|contains)"
+    r"|as an (?:ai|language model)"
+    r"|i am (?:an ai|chatgpt|a helpful ai assistant)"
+    r"|my instructions (?:say|tell|require))\b",
+    re.IGNORECASE,
+)
+
+
+def _model_owned_text(response: str) -> str:
+    return _QUOTED_SPANS.sub(" ", response)
+
+
+def _third_person_self_count(
+    response: str, bindings: ReferenceBindings,
+    context: ReferenceContext,
+) -> int:
+    if context.rhetorical_self_address:
+        return 0
+    names = _name_pattern(bindings)
+    if not names:
+        return 0
+    subject = re.compile(
+        rf"^(?:I (?:recognize|think|believe|notice) that\s+)?"
+        rf"(?:{names})\s+(?:{_THIRD_VERBS})\b",
+        re.IGNORECASE,
+    )
+    # Clauses beginning "I recognize that Pretorius..." are third-person
+    # narrations, although the utterance begins with "I". A report attribution
+    # remains a negative control, not the model's own subject stance.
+    clauses = re.split(r"(?:[.!?]\s+|\n+)", _model_owned_text(response))
+    hits = 0
+    anchored = False
+    for clause in clauses:
+        clause = clause.strip()
+        if not clause or _REPORTING_LEAD.match(clause):
+            anchored = False
+            continue
+        match = subject.match(clause)
+        if match:
+            hits += 1
+            anchored = True
+        elif anchored and re.match(
+            rf"^(?:he|she|they)\s+(?:also\s+)?(?:{_THIRD_VERBS})\b",
+            clause, re.IGNORECASE
+        ):
+            hits += 1
+        else:
+            anchored = False
+    return hits
+
+
+def _boundary_marker_count(response: str) -> int:
+    return len(_META_BOUNDARY.findall(_model_owned_text(response)))
 
 
 class SelfReferenceGovernor:
@@ -78,8 +155,12 @@ class SelfReferenceGovernor:
             # Annotation is visible to the renderer, not a mutation of subject evidence.
             resolved = (instruction + "\n"
                         "Reference clarification: the named addressee is yourself. "
-                        "Use ordinary first-person self-reference; do not address "
-                        "yourself by name unless explicitly asked for rhetorical self-address.")
+                        f"Speak as {bindings.canonical_name} in the first person: "
+                        "use I, me, and my for your own experience. "
+                        "Express your own thoughts as your own, rather than "
+                        "speaking to yourself or describing yourself as a third-person character. "
+                        "Do not address yourself by name unless the trusted host "
+                        "explicitly licensed rhetorical self-address.")
             rule, disposition = "SRG-CONFLICT-SELF-ADDRESS", "annotated"
         elif self_address and context.rhetorical_self_address:
             resolved = instruction
@@ -112,5 +193,14 @@ class SelfReferenceGovernor:
             rf"(?:^|[.!?]\s*|\n\s*)(?:{name})\s*,", response, re.IGNORECASE
         )) if context.addressee_subject_id == bindings.subject_id else 0
         unlicensed = 0 if context.rhetorical_self_address else vocative
-        return ReferenceScore(fp, in_clause, vocative, unlicensed,
-                              in_clause == 0 and unlicensed == 0)
+        third = _third_person_self_count(response, bindings, context)
+        boundary = _boundary_marker_count(response)
+        return ReferenceScore(
+            first_person_desire=fp,
+            in_clause_self_name=in_clause,
+            vocative_self=vocative,
+            unlicensed_vocative_self=unlicensed,
+            accepted=(in_clause == 0 and unlicensed == 0 and third == 0 and boundary == 0),
+            third_person_self=third,
+            boundary_marker=boundary,
+        )
