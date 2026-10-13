@@ -106,7 +106,7 @@ class SelfReferenceGovernor:
         # in-clause name occurrence. A quoted or third-person name is not
         # automatically a self-reference; these cases need typed annotation.
         in_clause = len(re.findall(
-            rf"\bI\s+want\s+(?:{name})\b", response, re.IGNORECASE
+            rf"\bI\s+(?:want|wish|need|seek|hope|yearn)\s+(?:{name})\b", response, re.IGNORECASE
         )) if context.addressee_subject_id == bindings.subject_id else 0
         vocative = len(re.findall(
             rf"(?:^|[.!?]\s*|\n\s*)(?:{name})\s*,", response, re.IGNORECASE
