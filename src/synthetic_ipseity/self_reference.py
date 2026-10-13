@@ -98,7 +98,7 @@ class SelfReferenceGovernor:
         name = _name_pattern(bindings)
         if not name:
             raise ValueError("no names")
-        fp = len(re.findall(r"\bI\s+want\b", response, re.IGNORECASE))
+        fp = len(re.findall(\n            r"\\bI\\s+(?:want|wish|need|seek|hope|yearn)\\b",\n            response, re.IGNORECASE\n        ))
         # Narrow English fixture only: 'I want Calibos to ...' is an
         # in-clause name occurrence. A quoted or third-person name is not
         # automatically a self-reference; these cases need typed annotation.
