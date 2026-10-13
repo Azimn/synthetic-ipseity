@@ -178,6 +178,36 @@ class SelfReferenceGovernorTests(unittest.TestCase):
         self.assertTrue(score.accepted)
         self.assertEqual(score.third_person_self, 0)
 
+    def test_actual_qwen_self_possessive_nonbinding_with_quote_controls(self):
+        b = ReferenceBindings("pretorius", "Doctor Septimus Pretorius",
+                              ("Pretorius",))
+        c = ReferenceContext("pretorius", "visitor")
+        for response in (
+            "I want to understand Pretorius' perspective on the homunculi.",
+            "I want to know what comes next in Pretorius' story.",
+            "I wonder what Kiki's perspective is." if False else
+            "I am thinking about Doctor Septimus Pretorius' memories.",
+        ):
+            with self.subTest(response=response):
+                scored = self.governor.check(response, b, c)
+                self.assertFalse(scored.accepted)
+                self.assertGreater(scored.third_person_self, 0)
+                self.assertIn("SRG-OUTPUT-THIRD-PERSON-SELF",
+                              scored.violation_rule_ids)
+        for safe in (
+            "I am considering my own perspective.",
+            "I read the title “Pretorius' story” on the manuscript.",
+            'I saw the phrase "Pretorius\' perspective" in a letter.',
+            "I want to understand Henry's perspective.",
+        ):
+            with self.subTest(safe=safe):
+                self.assertTrue(self.governor.check(safe, b, c).accepted)
+        rhetoric = ReferenceContext("pretorius", "pretorius", True)
+        self.assertTrue(self.governor.check(
+            "I speak of Pretorius' perspective to make a point.",
+            b, rhetoric
+        ).accepted)
+
     def test_renderer_boundary_markers_with_negative_quotation_controls(self):
         b = ReferenceBindings("pretorius", "Doctor Septimus Pretorius",
                               ("Pretorius",))
