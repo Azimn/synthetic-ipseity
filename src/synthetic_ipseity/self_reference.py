@@ -86,7 +86,7 @@ _META_BOUNDARY = re.compile(
     r"(?:states|says|instructs|asks|contains)"
     r"|as an (?:ai|language model)"
     r"|i am (?:an ai|chatgpt|a helpful ai assistant)"
-    r"|my instructions (?:say|tell|require))\b",
+    r"|my instructions (?:say|tell|require))(?:\b|(?<=:))",
     re.IGNORECASE,
 )
 
