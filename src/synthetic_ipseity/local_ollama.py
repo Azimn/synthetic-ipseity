@@ -95,3 +95,58 @@ class LocalOllamaRenderer:
         if not text.strip():
             raise ValueError("local model returned a blank response")
         return text
+
+
+
+class LocalOllamaConfiguredRenderer:
+    """Two-lane localhost adapter for trusted renderer-only instructions.
+
+    Input lane 1: EXACT admitted first-person text in the prompt field.
+    Input lane 2: trusted host configuration in the system field, never cognition.
+    No history, oracle, host state, audit, user metadata or tool data is sent.
+    This general transport is usable by any host of the speech governor.
+    """
+
+    def __init__(
+        self, model: str, *, timeout: float = 120.0,
+        max_output_tokens: int = 120,
+        transport: Callable[[bytes, float], bytes] | None = None,
+    ):
+        validated = LocalOllamaRenderer(
+            model, timeout=timeout, max_output_tokens=max_output_tokens,
+            transport=transport,
+        )
+        self.model = validated.model
+        self.timeout = validated.timeout
+        self.max_output_tokens = validated.max_output_tokens
+        self._transport = validated._transport
+
+    def __call__(self, subject_text: str, trusted_instruction: str) -> str:
+        if type(subject_text) is not str or not subject_text.strip():
+            raise TypeError("First-person subject frame required")
+        if len(subject_text) > 32000:
+            raise ValueError("Admitted frame exceeds local limit")
+        if type(trusted_instruction) is not str or not trusted_instruction.strip():
+            raise TypeError("Trusted renderer instructions required")
+        if len(trusted_instruction) > 4000:
+            raise ValueError("Renderer-only instruction exceeds bound")
+        payload = json.dumps({
+            "model": self.model,
+            "prompt": subject_text,
+            "system": trusted_instruction,
+            "stream": False,
+            "options": {"temperature": 0, "num_predict": self.max_output_tokens},
+        }, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf8")
+        response = self._transport(payload, self.timeout)
+        if type(response) is not bytes:
+            raise TypeError("Local model transport returned no bytes")
+        try:
+            decoded = json.loads(response)
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError("Invalid model response JSON") from exc
+        if type(decoded) is not dict:
+            raise ValueError("Invalid model payload shape")
+        value = decoded.get("response")
+        if type(value) is not str or not value.strip():
+            raise ValueError("Missing nonempty model speech")
+        return value.strip()
