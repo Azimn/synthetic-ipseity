@@ -11,7 +11,9 @@ from synthetic_ipseity import (
     Channel, DurableIpseityHost, Kind, Observation, SourceSignal,
     SubjectOnlyRendererPort,
 )
-from synthetic_ipseity.local_ollama import LocalOllamaRenderer, LOCAL_ENDPOINT, _local_post
+from synthetic_ipseity.local_ollama import (
+    LocalOllamaRenderer, LocalOllamaConfiguredRenderer, LOCAL_ENDPOINT, _local_post,
+)
 
 
 class FakeTransport:
@@ -49,6 +51,43 @@ class LocalOllamaTests(unittest.TestCase):
         self.assertNotIn("messages",body)
         self.assertNotIn("system",body)
         self.assertNotIn("tools",body)
+
+
+    def test_two_lane_configured_renderer_is_stateless_and_host_neutral(self):
+        transport = FakeTransport(response="I wish to understand.")
+        delegate = LocalOllamaConfiguredRenderer(
+            "smollm2:135m", max_output_tokens=72, transport=transport,
+        )
+        for subject in ("Calibos", "Kiki", "Pretorius"):
+            with self.subTest(subject=subject):
+                inp = "I am " + subject + " and I have a question."
+                instruction = "Speak as " + subject + " in my first person."
+                self.assertEqual(delegate(inp, instruction), "I wish to understand.")
+                body, _ = transport.requests[-1]
+                self.assertEqual(body["prompt"], inp)
+                self.assertEqual(body["system"], instruction)
+                self.assertEqual(body["options"],
+                                 {"temperature": 0, "num_predict": 72})
+                self.assertEqual(set(body),
+                                 {"prompt","system","model","stream","options"})
+                self.assertNotIn("policy_decisions", str(body))
+
+    def test_two_lane_rejects_untrusted_shape_and_invalid_response(self):
+        c = LocalOllamaConfiguredRenderer(
+            "smollm2:135m", transport=FakeTransport()
+        )
+        for instruction in ("", "   ", None, "x"*4001):
+            with self.subTest(instruction=type(instruction)):
+                with self.assertRaises((TypeError, ValueError)):
+                    c("I am here.", instruction)
+        with self.assertRaises(ValueError):
+            LocalOllamaConfiguredRenderer("http://somewhere")
+        broken = LocalOllamaConfiguredRenderer(
+            "smollm2:135m",
+            transport=lambda *args: b'{"response":null}',
+        )
+        with self.assertRaises(ValueError):
+            broken("I am thinking.", "Please speak as yourself.")
 
     def test_end_to_end_port_filters_secret_world_data_before_http_body(self):
         with tempfile.TemporaryDirectory() as tmp:
