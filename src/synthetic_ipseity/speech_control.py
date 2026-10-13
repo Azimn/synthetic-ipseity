@@ -125,7 +125,20 @@ class GovernedSpeechControl:
                     "self-address. This correction is renderer configuration "
                     "only, not a new memory or observation."
                 )
-            candidate = self._generate(subject_text, effective)
+            try:
+                candidate = self._generate(subject_text, effective)
+            except (OSError, TimeoutError, ConnectionError, ValueError, TypeError):
+                # Known local transport / invalid model output failure. Never
+                # leak errors as subject experience or ACK an invalid model
+                # reply. One trusted fallback may still be delivered.
+                attempts.append(SpeechControlAttempt(
+                    "initial" if index == 0 else "repair",
+                    sha256(b"").hexdigest(),
+                    False,
+                    ("SRG-RENDERER-UNAVAILABLE",),
+                ))
+                self.last_score = None
+                break
             if type(candidate) is not str or not candidate.strip():
                 score = None
                 accepted = False
